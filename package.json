@@ -1,0 +1,33 @@
+{
+  "name": "js-complexity-analysis",
+  "displayName": "JS Complexity Analysis",
+  "description": "Produce a complexity analysis report of your JS project",
+  "version": "0.0.1",
+  "publisher": "TomiTurtiainen",
+  "engines": {
+    "vscode": "^0.10.1"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onLanguage:javascript"
+  ],
+  "main": "./src/extension",
+  "contributes": {
+    "commands": [
+      {
+        "command": "complexityAnalysis.analyseOne",
+        "title": "Complexity analysis"
+      }
+    ]
+  },
+  "devDependencies": {
+    "vscode": "0.10.x"
+  },
+  "dependencies": {
+    "escomplex": "^1.3.0",
+    "escomplex-ast-moz": "^0.2.1",
+    "esprima": "^2.7.1"
+  }
+}
