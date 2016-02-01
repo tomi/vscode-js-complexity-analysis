@@ -41,7 +41,7 @@ For example:
     "cyclomaticDensity",
     "physicalLOC",
     "logicalLOC",
-    "params,
+    "params",
     "halsteadDifficulty",
     "halsteadVolume",
     "halsteadEffort",
