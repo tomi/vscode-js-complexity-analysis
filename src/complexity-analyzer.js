@@ -5,10 +5,14 @@ const walker    = require("escomplex-ast-moz");
 const escomplex = require("escomplex");
 
 function analyse(js) {
-    const ast = esprima.parse(js, { loc: true });
-    const result = escomplex.analyse(ast, walker);
+    try {
+        const ast = esprima.parse(js, { loc: true });
+        const result = escomplex.analyse(ast, walker);
 
-    return result;
+        return result;
+    } catch (e) {
+        throw new Error("Could not analyze file. Is it a syntactically valid JS file?");
+    }
 }
 
 module.exports = {
