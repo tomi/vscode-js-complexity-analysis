@@ -17,7 +17,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "complexityAnalysis.analyseOne",
+        "command": "complexityAnalysis.analyseFile",
         "title": "Complexity analysis"
       }
     ]
