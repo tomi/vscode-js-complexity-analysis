@@ -11,6 +11,7 @@
     "Other"
   ],
   "activationEvents": [
+    "onCommand:complexityAnalysis.analyseFile",
     "onLanguage:javascript"
   ],
   "main": "./src/extension",
