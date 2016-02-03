@@ -19,7 +19,7 @@
     "commands": [
       {
         "command": "complexityAnalysis.analyseFile",
-        "title": "Complexity analysis"
+        "title": "File complexity analysis"
       }
     ]
   },
