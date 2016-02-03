@@ -1,6 +1,7 @@
 "use strict";
 
 const vscode = require("vscode");
+const workspace = vscode.workspace;
 
 const CONFIG_BLOCK_NAME = "complexityAnalysis";
 
@@ -59,7 +60,7 @@ const METRICS = new Map([
  * Returns configured metrics or default metrics if none configured
  */
 function getMetrics() {
-    const config = vscode.workspace.getConfiguration(CONFIG_BLOCK_NAME);
+    const config = workspace.getConfiguration(CONFIG_BLOCK_NAME);
 
     let metrics = config.get("metrics", DEFAULT_METRICS);
     metrics = Array.isArray(metrics) ? metrics : DEFAULT_METRICS;
@@ -68,6 +69,43 @@ function getMetrics() {
         .map(m => METRICS.get(m));
 }
 
+/**
+ * Returns configured exclude patterns
+ */
+function getExclude() {
+    const extensionConfig = workspace.getConfiguration(CONFIG_BLOCK_NAME);
+    const nativeConfig = workspace.getConfiguration("search").get("exclude");
+
+    let exclude = extensionConfig.get("exclude", nativeConfig) || {};
+
+    return objToArray(exclude);
+}
+
+/**
+ * Returns configured include patterns
+ */
+function getInclude() {
+    const extensionConfig = workspace.getConfiguration(CONFIG_BLOCK_NAME);
+
+    let include = extensionConfig.get("include", {});
+
+    return objToArray(include);
+}
+
+function objToArray(obj) {
+    let array = [];
+
+    for (let prop in obj) {
+        if (obj[prop]) {
+            array.push(prop);
+        }
+    }    
+    
+    return array;
+}
+
 module.exports = {
-    getMetrics
+    getMetrics,
+    getInclude,
+    getExclude,
 };

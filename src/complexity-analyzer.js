@@ -15,6 +15,13 @@ function analyse(js) {
     }
 }
 
+function process(analyses) {
+    return escomplex.processResults({
+        reports: analyses
+    }, false);
+}
+
 module.exports = {
-    analyse
+    analyse,
+    process
 };
