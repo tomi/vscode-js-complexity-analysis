@@ -6,8 +6,6 @@ const reporter = require("./report-builder.js");
 const config   = require("./config");
 const Output   = require("./output-channel");
 
-const CHANNEL_NAME = "Complexity Report";
-
 function getFileRelativePath(document) {
     const fileUri = document.fileName;
     const projectPath = vscode.workspace.rootPath;
@@ -16,7 +14,7 @@ function getFileRelativePath(document) {
 }
 
 function buildReport(document) {
-    const channel = new Output(CHANNEL_NAME);
+    const channel = new Output();
 
     const filePath = getFileRelativePath(document);
     channel.write(filePath);
