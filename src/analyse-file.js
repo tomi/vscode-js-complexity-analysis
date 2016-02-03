@@ -6,17 +6,10 @@ const reporter = require("./report-builder.js");
 const config   = require("./config");
 const Output   = require("./output-channel");
 
-function getFileRelativePath(document) {
-    const fileUri = document.fileName;
-    const projectPath = vscode.workspace.rootPath;
-
-    return projectPath ? fileUri.replace(projectPath, "") : fileUri;
-}
-
 function buildReport(document) {
     const channel = new Output();
 
-    const filePath = getFileRelativePath(document);
+    const filePath = vscode.workspace.asRelativePath(document.fileName);
     channel.write(filePath);
 
     const metrics = config.getMetrics();
