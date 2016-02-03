@@ -1,5 +1,5 @@
 const vscode  = require("vscode");
-const command = require("./complexity-command");
+const command = require("./analyse-file");
 
 function activate(context) {
 	const disposable = vscode.commands.registerTextEditorCommand(
