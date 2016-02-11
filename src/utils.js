@@ -1,3 +1,5 @@
+"use strict";
+
 function all(array, cb) {
     return array.reduce((prevVal, currVal) => prevVal && cb(currVal), true);
 }
@@ -20,12 +22,18 @@ function get(object, path, defaultValue) {
     while (object != null && index < length) {
         object = object[path[index++]];
     }
+
     return (index && index == length && object !== undefined) ? object : defaultValue;
+}
+
+function roundToTwo(num) {
+    return +(Math.round(num + "e+2") + "e-2");
 }
 
 module.exports = {
     all,
     none,
     sum,
-    get
+    roundToTwo,
+    get: get
 };

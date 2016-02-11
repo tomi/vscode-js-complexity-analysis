@@ -53,7 +53,7 @@ function buildFileReport(data, metrics) {
  */
 function buildAggregateReport(data) {
     const headers = ["Metric", "Value"];
-    const colAligns = headers.map(() => "left");
+    const colAligns = ["left", "right"];
 
     const table = new Table({
         head:      headers,
@@ -62,11 +62,10 @@ function buildAggregateReport(data) {
     });
 
     AGGREGATE_METRICS
-        .map(metric => [metric.name, utils.get(data, metric.path, "-")])
+        .map(metric => [metric.name, getMetricValue(data, metric.path)])
         .forEach(dataPoint => table.push(dataPoint));
 
     return table.toString();
-
 }
 
 /**
@@ -82,7 +81,13 @@ function getLegend(metrics) {
  * Returns a row array for given item
  */
 function getItemData(item, metrics) {
-    return metrics.map(m => utils.get(item, m.path, "-"));
+    return metrics.map(metric => getMetricValue(item, metric.path));
+}
+
+function getMetricValue(object, path) {
+    const value = utils.get(object, path, "-");
+
+    return Number.isFinite(value) ? utils.roundToTwo(value) : value;
 }
 
 module.exports = {
