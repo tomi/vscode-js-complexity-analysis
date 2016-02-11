@@ -8,18 +8,22 @@ const Output   = require("./output-channel");
 
 function buildReport(document) {
     const channel = new Output();
-
     const filePath = vscode.workspace.asRelativePath(document.fileName);
-    channel.write(filePath);
 
-    const metrics = config.getMetrics();
-    const legend = reporter.getLegend(metrics);
-    channel.write(legend)
+    try {
+        channel.write(filePath);
 
-    const fileContents = document.getText();
-    const analysis = analyser.analyse(fileContents);
-    const report = reporter.buildFileReport(analysis, metrics);
-    channel.write(report);
+        const metrics = config.getMetrics();
+        const legend = reporter.getLegend(metrics);
+        channel.write(legend)
+
+        const fileContents = document.getText();
+        const analysis = analyser.analyse(fileContents);
+        const report = reporter.buildFileReport(analysis, metrics);
+        channel.write(report);
+    } catch (error) {
+        channel.write(`File ${ filePath } analysis failed: ${ error }`);
+    }
 }
 
 function runAnalysis(editor) {
