@@ -18,5 +18,6 @@
 - Complexity analysis command.
 - Option to configure calculated metrics per function.
 
-[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.1...HEAD
+[0.2.1]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.1.0...v0.2.0
