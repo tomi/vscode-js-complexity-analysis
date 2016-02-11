@@ -3,6 +3,7 @@
 const esprima   = require("esprima");
 const walker    = require("escomplex-ast-moz");
 const escomplex = require("escomplex");
+const utils     = require("./utils");
 
 function analyse(js) {
     const ast = esprima.parse(js, { loc: true });
@@ -16,14 +17,10 @@ function process(analyses) {
         reports: analyses
     }, false);
 
-    summary.totalLOC = sum(summary.reports.map(report =>
+    summary.totalLOC = utils.sum(summary.reports.map(report =>
         report.aggregate.sloc.logical));
 
     return summary;
-}
-
-function sum(data) {
-    return data.reduce((prevVal, currVal) => prevVal + currVal, 0);
 }
 
 module.exports = {

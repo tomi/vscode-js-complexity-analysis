@@ -7,21 +7,14 @@ const analyser = require("./complexity-analyzer");
 const reporter = require("./report-builder.js");
 const config   = require("./config");
 const Output   = require("./output-channel");
-
-function all(array, cb) {
-    return array.reduce((prevVal, currVal) => prevVal && cb(currVal), true);
-}
-
-function none(array, cb) {
-    return !all(array, cb);
-}
+const utils    = require("./utils");
 
 function findFiles(include, exclude) {
     return vscode.workspace.findFiles("**/*.js", "**/node_modules/**")
         .then(files => {
             return files.filter(file =>
-                none(exclude, pattern => minimatch(file.path, pattern)) &&
-                all(include, pattern => minimatch(file.path, pattern)));
+                utils.none(exclude, pattern => minimatch(file.path, pattern)) &&
+                utils.all(include, pattern => minimatch(file.path, pattern)));
         });
 }
 
@@ -85,17 +78,13 @@ function createAggregateReport(analyses, channel, metrics) {
     channel.write(report);
 }
 
-function handleError(error) {
-    vscode.window.showErrorMessage("Failed to analyse file. " + error);
-    console.log(error);
-}
-
 function runAnalysis(editor) {
     try {
         buildReport(editor.document)
             .then(null, error => handleError(error));
     } catch (e) {
-        handleError(e);
+        vscode.window.showErrorMessage("Failed to analyse file. " + error);
+        console.log(error);
     }
 }
 
