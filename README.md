@@ -1,5 +1,5 @@
 ## JavaScript Complexity Analysis for Visual Studio Code
-Uses [ESComplex] to produce a complexity analysis report for a JavaScript projcet or file. The following [metrics] can calculated:
+Uses [ESComplex] to produce a complexity analysis report for a JavaScript project or file. The following [metrics] can calculated:
 
 * Lines of code
 * Number of parameters
