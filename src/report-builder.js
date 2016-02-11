@@ -2,6 +2,7 @@
 
 // ASCII Table
 const Table = require("../libs/cli-table");
+const utils = require("./utils");
 
 // Static columns that are always present
 const FUNC_COLUMNS = [
@@ -61,7 +62,7 @@ function buildAggregateReport(data) {
     });
 
     AGGREGATE_METRICS
-        .map(metric => [metric.name, get(data, metric.path, "-")])
+        .map(metric => [metric.name, utils.get(data, metric.path, "-")])
         .forEach(dataPoint => table.push(dataPoint));
 
     return table.toString();
@@ -81,20 +82,7 @@ function getLegend(metrics) {
  * Returns a row array for given item
  */
 function getItemData(item, metrics) {
-    return metrics.map(m => get(item, m.path, "-"));
-}
-
-// Like in lodash
-function get(object, path, defaultValue) {
-    path = path.split(".");
-
-    let index = 0;
-    let length = path.length;
-
-    while (object != null && index < length) {
-        object = object[path[index++]];
-    }
-    return (index && index == length && object !== undefined) ? object : defaultValue;
+    return metrics.map(m => utils.get(item, m.path, "-"));
 }
 
 module.exports = {
