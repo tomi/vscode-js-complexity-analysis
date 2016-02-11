@@ -78,13 +78,17 @@ function createAggregateReport(analyses, channel, metrics) {
     channel.write(report);
 }
 
+function handleError(error) {
+    vscode.window.showErrorMessage("Failed to analyse file. " + error);
+    console.log(error);
+}
+
 function runAnalysis(editor) {
     try {
         buildReport(editor.document)
-            .then(null, error => handleError(error));
-    } catch (e) {
-        vscode.window.showErrorMessage("Failed to analyse file. " + error);
-        console.log(error);
+            .then(null, handleError);
+    } catch (error) {
+        handleError(error);
     }
 }
 

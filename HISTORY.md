@@ -1,5 +1,9 @@
 # History
 
+## [0.2.1] - 2016-02-10
+### Changed
+- Fixed bug in "Project complexity analysis" error handling
+
 ## [0.2.0] - 2016-02-10
 ### Added
 - "Project complexity analysis" command.
