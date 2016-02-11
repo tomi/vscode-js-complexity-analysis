@@ -35,16 +35,13 @@ function buildReport(document) {
     const include = config.getInclude();
     const exclude = config.getExclude();
 
-    findFiles(include, exclude)
+    return findFiles(include, exclude)
         .then(files => {
             const analysePromises = files.map(file => analyseSingleFile(file, channel, metrics));
 
-            return Promise.all(analysePromises)
+            return Promise.all(analysePromises);
         }).then(analyses => {
-            // TODO: Create aggregate report
-            //createAggregateReport(analyses, channel, metrics);
-        }, error => {
-            handleError(error);
+            return createAggregateReport(analyses, channel, metrics);
         });
 }
 
@@ -61,36 +58,45 @@ function readFile(file) {
 }
 
 function analyseSingleFile(file, channel, metrics) {
+    const relativePath = vscode.workspace.asRelativePath(file);
+
     return readFile(file)
         .then(fileContents => {
-            const relativePath = vscode.workspace.asRelativePath(file);
-            channel.write(relativePath);
-            const analysis = analyser.analyse(fileContents);
-            analysis.path = relativePath;
-            const report = reporter.buildFileReport(analysis, metrics);
-            channel.write(report);
+            try {
+                channel.write(relativePath);
+                const analysis = analyser.analyse(fileContents);
+                analysis.path = relativePath;
+                const report = reporter.buildFileReport(analysis, metrics);
+                channel.write(report);
 
-            return analysis;
+                return analysis;
+            } catch (e) {
+                channel.write(`File ${ relativePath } analysis failed: ${ e }`);
+                return undefined;
+            }
         });
 }
 
 function createAggregateReport(analyses, channel, metrics) {
-    const aggregate = analyser.process(analyses);
-    const report = reporter.buildFileReport(aggregate, metrics);
+    channel.write("Entire project");
+    const filtered = analyses.filter(analysis => analysis !== undefined);
+    const aggregate = analyser.process(filtered);
+    const report = reporter.buildAggregateReport(aggregate, metrics);
     channel.write(report);
+}
+
+function handleError(error) {
+    vscode.window.showErrorMessage("Failed to analyse file. " + error);
+    console.log(error);
 }
 
 function runAnalysis(editor) {
     try {
-        buildReport(editor.document);
+        buildReport(editor.document)
+            .then(null, error => handleError(error));
     } catch (e) {
         handleError(e);
     }
-}
-
-function handleError(error) {
-    vscode.window.showErrorMessage("Failed to analyse file. " + e);
-    console.log(error);
 }
 
 module.exports = {

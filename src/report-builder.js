@@ -4,16 +4,26 @@
 const Table = require("../libs/cli-table");
 
 // Static columns that are always present
-const STATIC_COLS = [
+const FUNC_COLUMNS = [
     { path: "name", name: "Function" },
     { path: "line", name: "Line" }
 ];
 
+const AGGREGATE_METRICS = [
+    { name: "Total logical LOC",                      path: "totalLOC"        },
+    { name: "Change cost",                            path: "changeCost"      },
+    { name: "Avg per function logical LOC",           path: "loc"             },
+    { name: "Avg per function cyclomatic complexity", path: "cyclomatic"      },
+    { name: "Avg per function Halstead effort",       path: "effort"          },
+    { name: "Avg per function parameter count",       path: "params"          },
+    { name: "Avg per file maintainability",           path: "maintainability" }
+];
+
 /**
- * Build report table for given data with given metrics
+ * Build report table for given file data with given metrics
  */
 function buildFileReport(data, metrics) {
-    const staticAndMetrics = STATIC_COLS.concat(metrics);
+    const staticAndMetrics = FUNC_COLUMNS.concat(metrics);
 
     const headers = staticAndMetrics.map(item => item.name);
     const colAligns = [ "left", "right" ].concat(
@@ -35,6 +45,27 @@ function buildFileReport(data, metrics) {
     data.functions.forEach(item => table.push(getItemData(item, staticAndMetrics)));
 
     return table.toString();
+}
+
+/**
+ * Build report table for given aggregate data
+ */
+function buildAggregateReport(data) {
+    const headers = ["Metric", "Value"];
+    const colAligns = headers.map(() => "left");
+
+    const table = new Table({
+        head:      headers,
+        colAligns: colAligns,
+        compact:   true
+    });
+
+    AGGREGATE_METRICS
+        .map(metric => [metric.name, get(data, metric.path, "-")])
+        .forEach(dataPoint => table.push(dataPoint));
+
+    return table.toString();
+
 }
 
 /**
@@ -68,5 +99,6 @@ function get(object, path, defaultValue) {
 
 module.exports = {
     buildFileReport,
+    buildAggregateReport,
     getLegend
 };

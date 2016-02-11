@@ -5,20 +5,25 @@ const walker    = require("escomplex-ast-moz");
 const escomplex = require("escomplex");
 
 function analyse(js) {
-    try {
-        const ast = esprima.parse(js, { loc: true });
-        const result = escomplex.analyse(ast, walker);
+    const ast = esprima.parse(js, { loc: true });
+    const result = escomplex.analyse(ast, walker);
 
-        return result;
-    } catch (e) {
-        throw new Error("Could not analyze file. Is it a syntactically valid JS file?");
-    }
+    return result;
 }
 
 function process(analyses) {
-    return escomplex.processResults({
+    const summary = escomplex.processResults({
         reports: analyses
     }, false);
+
+    summary.totalLOC = sum(summary.reports.map(report =>
+        report.aggregate.sloc.logical));
+
+    return summary;
+}
+
+function sum(data) {
+    return data.reduce((prevVal, currVal) => prevVal + currVal, 0);
 }
 
 module.exports = {
