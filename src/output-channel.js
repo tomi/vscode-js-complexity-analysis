@@ -2,6 +2,8 @@
 
 const vscode = require("vscode");
 
+const CHANNEL_NAME = "Complexity Report";
+
 function getTargetColumn() {
     const numOpenEditors = vscode.window.visibleTextEditors.length;
 
@@ -15,8 +17,8 @@ function getTargetColumn() {
 }
 
 class OutputChannel {
-    constructor(name) {
-        const channel = vscode.window.createOutputChannel(name);
+    constructor() {
+        const channel = vscode.window.createOutputChannel(CHANNEL_NAME);
         channel.clear();
 
         const viewColumn = getTargetColumn();

@@ -1,11 +1,19 @@
 const vscode  = require("vscode");
-const command = require("./complexity-command");
+const analyseFile = require("./analyse-file");
+const analyseProject = require("./analyse-project");
+
+const registerForEditor = vscode.commands.registerTextEditorCommand;
+const register = vscode.commands.registerCommand;
 
 function activate(context) {
-	const disposable = vscode.commands.registerTextEditorCommand(
-        "complexityAnalysis.analyseFile", command.execute);
+	const commands = [
+        registerForEditor("complexityAnalysis.analyseFile", analyseFile.execute),
+        register("complexityAnalysis.analyseProject", analyseProject.execute)
+    ];
 
-	context.subscriptions.push(disposable);
+    commands.forEach(cmd =>
+	   context.subscriptions.push(cmd)
+    );
 }
 
 exports.activate = activate;

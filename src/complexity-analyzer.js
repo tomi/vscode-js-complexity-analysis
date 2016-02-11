@@ -3,18 +3,27 @@
 const esprima   = require("esprima");
 const walker    = require("escomplex-ast-moz");
 const escomplex = require("escomplex");
+const utils     = require("./utils");
 
 function analyse(js) {
-    try {
-        const ast = esprima.parse(js, { loc: true });
-        const result = escomplex.analyse(ast, walker);
+    const ast = esprima.parse(js, { loc: true });
+    const result = escomplex.analyse(ast, walker);
 
-        return result;
-    } catch (e) {
-        throw new Error("Could not analyze file. Is it a syntactically valid JS file?");
-    }
+    return result;
+}
+
+function process(analyses) {
+    const summary = escomplex.processResults({
+        reports: analyses
+    }, false);
+
+    summary.totalLOC = utils.sum(summary.reports.map(report =>
+        report.aggregate.sloc.logical));
+
+    return summary;
 }
 
 module.exports = {
-    analyse
+    analyse,
+    process
 };
