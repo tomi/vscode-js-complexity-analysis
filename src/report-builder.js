@@ -72,9 +72,15 @@ function buildAggregateReport(data) {
  * Get legend for given metrics
  */
 function getLegend(metrics) {
-    return metrics
-        .map(m => `${ m.name }: ${ m.description }`)
-        .join("\n");
+    const table = new Table({
+        compact: true
+    });
+
+    metrics
+        .map(m => [ m.name, m.description ])
+        .forEach(m => table.push(m));
+
+    return table.toString();
 }
 
 /**
