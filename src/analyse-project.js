@@ -40,7 +40,7 @@ function buildReport(document) {
 
 function readFile(file) {
     return new Promise((resolve, reject) => {
-        fs.readFile(file.path, (error, data) => {
+        fs.readFile(file.fsPath, (error, data) => {
             if (error) {
                 return reject(error);
             }
