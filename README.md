@@ -67,6 +67,9 @@ For example:
 ]
 ````
 
+## Change Log
+[View](https://github.com/tomi/vscode-js-complexity-analysis/blob/master/HISTORY.md)
+
 ## Bugs
 Report them [here](https://github.com/tomi/vscode-js-complexity-analysis/issues).
 
