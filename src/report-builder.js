@@ -1,7 +1,7 @@
 "use strict";
 
 // ASCII Table
-const Table = require("../libs/cli-table");
+const Table = require("./htmlTable");
 const utils = require("./utils");
 
 // Static columns that are always present

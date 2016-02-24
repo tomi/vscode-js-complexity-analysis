@@ -5,6 +5,7 @@ const analyser = require("./complexity-analyzer");
 const reporter = require("./report-builder.js");
 const config   = require("./config");
 const Output   = require("./output-channel");
+const docPresenter = require("./document-presenter");
 
 function buildReport(document) {
     const channel = new Output();
@@ -21,6 +22,8 @@ function buildReport(document) {
         const analysis = analyser.analyse(fileContents);
         const report = reporter.buildFileReport(analysis, metrics);
         channel.write(report);
+
+        docPresenter.showDocument("Complexity analysis of " + filePath, report);
     } catch (error) {
         channel.write(`File ${ filePath } analysis failed: ${ error }`);
     }
