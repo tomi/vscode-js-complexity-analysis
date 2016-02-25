@@ -1,12 +1,20 @@
 "use strict";
 
+const HtmlReportProvider = require("./report/HtmlReportProvider.js");
+const ReportFactory = require("./report/ReportFactory.js");
+
+const reportFactory  = new ReportFactory();
+const reportProvider = new HtmlReportProvider(reportFactory);
+
 const vscode  = require("vscode");
-const analyseFile = require("./analyse-file");
+const analyseFile = require("./analyse-file")(reportFactory);
 const analyseProject = require("./analyse-project");
 const docPresenter = require("./document-presenter");
 
 const registerForEditor = vscode.commands.registerTextEditorCommand;
 const register = vscode.commands.registerCommand;
+
+
 
 function activate(context) {
 	const commands = [
@@ -18,7 +26,7 @@ function activate(context) {
 	   context.subscriptions.push(cmd)
     );
 
-    const registration = docPresenter.register();
+    const registration = reportProvider.register();
 
     context.subscriptions.push(registration);
 }

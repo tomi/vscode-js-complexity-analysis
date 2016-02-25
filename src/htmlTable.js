@@ -48,10 +48,15 @@ class HtmlTable {
         <html>
             <head><style>${ tableStyle }</style></head>
             <body>
-        <table>
+<svg width="100" height="100" onclick="var t = document.getElementById('table');t.innerHtml = 'Moi';">
+  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
+</svg>
+        <table id="table">
         ${ buildHeader(this.headers, this.colAligns) }
         ${ buildRows(this.rows, this.colAligns) }
-        </table></body></html>`;
+        </table>
+</body></html>
+`;
     }
 }
 

@@ -6,38 +6,52 @@ const reporter = require("./report-builder.js");
 const config   = require("./config");
 const Output   = require("./output-channel");
 const docPresenter = require("./document-presenter");
+const FileAnalysis = require("./models/FileAnalysis.js");
+const FileReport = require("./report/FileReport.js");
 
-function buildReport(document) {
-    const channel = new Output();
-    const filePath = vscode.workspace.asRelativePath(document.fileName);
+function AnalyseFile(reportFactory) {
 
-    try {
-        channel.write(filePath);
+    function buildReport(document) {
+        const channel = new Output();
+        const filePath = vscode.workspace.asRelativePath(document.fileName);
 
-        const metrics = config.getMetrics();
-        const legend = reporter.getLegend(metrics);
-        channel.write(legend)
+        try {
+            channel.write(filePath);
 
-        const fileContents = document.getText();
-        const analysis = analyser.analyse(fileContents);
-        const report = reporter.buildFileReport(analysis, metrics);
-        channel.write(report);
+            // const metrics = config.getMetrics();
+            // const legend = reporter.getLegend(metrics);
+            // channel.write(legend)
 
-        docPresenter.showDocument("Complexity analysis of " + filePath, report);
-    } catch (error) {
-        channel.write(`File ${ filePath } analysis failed: ${ error }`);
+            const fileContents = document.getText();
+            const analysis = analyser.analyse(fileContents);
+            const anal = new FileAnalysis(filePath, analysis);
+
+            // const report = reporter.buildFileReport(analysis, metrics);
+            // channel.write(report);
+
+            const report = new FileReport(anal);
+            reportFactory.addReport(filePath, report);
+        const uri = vscode.Uri.parse(`jsComplexityAnalysis://virtual/${ filePath }`);
+
+        return vscode.commands.executeCommand("vscode.previewHtml", uri);
+            // docPresenter.showDocument("Complexity analysis of " + filePath, report);
+        } catch (error) {
+            channel.write(`File ${ filePath } analysis failed: ${ error }`);
+        }
     }
+
+    function runAnalysis(editor) {
+        try {
+            buildReport(editor.document);
+        } catch (e) {
+            vscode.window.showErrorMessage("Failed to analyse file. " + e);
+            console.log(e);
+        }
+    }
+
+    return {
+        execute: runAnalysis
+    };
 }
 
-function runAnalysis(editor) {
-    try {
-        buildReport(editor.document);
-    } catch (e) {
-        vscode.window.showErrorMessage("Failed to analyse file. " + e);
-        console.log(e);
-    }
-}
-
-module.exports = {
-    execute: runAnalysis
-};
+module.exports = AnalyseFile;
