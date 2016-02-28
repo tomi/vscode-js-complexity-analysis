@@ -1,22 +1,5 @@
 "use strict";
 
-const tableStyle =
-`
-table {
-    border-collapse: collapse;
-	margin:0px;
-    padding:0px;
-}
-table td{
-	border:1px solid #000000;
-	padding:7px;
-	font-weight:normal;
-}
-table thead td{
-	font-weight:bold;
-}
-`
-
 function buildHeader(headers, aligns) {
     const buildCells = () =>
         headers.map((cell, i) => `<td bgcolor="#fafafa" align="${ aligns[i] || "left" }"><b>${ cell }</b></td>`).join("");
@@ -36,26 +19,15 @@ class HtmlTable {
     constructor(options) {
         this.headers   = options.head || [];
         this.colAligns = options.colAligns || [];
-        this.rows = [];
-    }
-
-    push(row) {
-        this.rows.push(row);
+        this.rows = options.rows;
     }
 
     toString() {
         return `
-        <html>
-            <head><style>${ tableStyle }</style></head>
-            <body>
-<svg width="100" height="100" onclick="var t = document.getElementById('table');t.innerHtml = 'Moi';">
-  <circle cx="50" cy="50" r="40" stroke="green" stroke-width="4" fill="yellow" />
-</svg>
         <table id="table">
         ${ buildHeader(this.headers, this.colAligns) }
         ${ buildRows(this.rows, this.colAligns) }
         </table>
-</body></html>
 `;
     }
 }

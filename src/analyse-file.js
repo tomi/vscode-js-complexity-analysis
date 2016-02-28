@@ -33,7 +33,7 @@ function AnalyseFile(reportFactory) {
             reportFactory.addReport(filePath, report);
         const uri = vscode.Uri.parse(`jsComplexityAnalysis://virtual/${ filePath }`);
 
-        return vscode.commands.executeCommand("vscode.previewHtml", uri);
+        return vscode.commands.executeCommand("vscode.previewHtml", uri, vscode.ViewColumn.Two);
             // docPresenter.showDocument("Complexity analysis of " + filePath, report);
         } catch (error) {
             channel.write(`File ${ filePath } analysis failed: ${ error }`);
