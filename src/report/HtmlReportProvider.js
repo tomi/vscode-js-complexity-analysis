@@ -5,6 +5,7 @@ const options = require("../config").options.navigation;
 
 function HtmlReportProvider(reportFactory) {
     this.provideTextDocumentContent = function(uri) {
+        console.log("Navigating to ", uri);
         const path = uri.path;
 
         const report = reportFactory.getReport(path);

@@ -19,15 +19,14 @@ function calculateAverages(analyses) {
     });
 
     metrics.forEach(metric => {
-        result[metric] += sum[metric] / divisor;
+        result[metric] = sum[metric] / divisor;
     });
 
     return result;
 }
 
 function calculateTotalSloc(analyses) {
-    return analyses.reduce((sum, analysis) => sum + analysis.sloc, 0) /
-        (analyses.length || 1);
+    return analyses.reduce((sum, analysis) => sum + analysis.sloc, 0);
 }
 
 function ProjectAnalysis() {
@@ -45,7 +44,8 @@ function ProjectAnalysis() {
             totalSloc:          totalSloc,
             avgSloc:            averages.sloc,
             avgMaintainability: averages.maintainability,
-            avgCyclomatic:      averages.cyclomatic
+            avgCyclomatic:      averages.cyclomatic,
+            fileAnalyses:       analyses
         };
     }
 }

@@ -8,12 +8,10 @@ const reportProvider = new HtmlReportProvider(reportFactory);
 
 const vscode  = require("vscode");
 const analyseFile = require("./analyse-file")(reportFactory);
-const analyseProject = require("./analyse-project");
+const analyseProject = require("./analyse-project")(reportFactory);
 
 const registerForEditor = vscode.commands.registerTextEditorCommand;
 const register = vscode.commands.registerCommand;
-
-
 
 function activate(context) {
 	const commands = [
