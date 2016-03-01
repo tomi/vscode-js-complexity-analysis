@@ -5,6 +5,11 @@ const workspace = vscode.workspace;
 
 const CONFIG_BLOCK_NAME = "complexityAnalysis";
 
+const navigation = {
+    scheme: "jsComplexityAnalysis",
+    authority: "complexity-analysis"
+};
+
 // Default metrics to use
 const DEFAULT_METRICS = [
     "params",
@@ -99,8 +104,8 @@ function objToArray(obj) {
         if (obj[prop]) {
             array.push(prop);
         }
-    }    
-    
+    }
+
     return array;
 }
 
@@ -108,4 +113,7 @@ module.exports = {
     getMetrics,
     getInclude,
     getExclude,
+    options: {
+        navigation
+    }
 };

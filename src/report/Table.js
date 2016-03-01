@@ -1,15 +1,20 @@
 "use strict";
 
-function buildHeader(headers, aligns) {
+function getAlign(column) {
+    return column.align || "left";
+}
+
+function buildHeader(columns) {
+    const getCell = (cell, align) => `<td align="${ align }"><b>${ cell }</b></td>`;
     const buildCells = () =>
-        headers.map((cell, i) => `<td bgcolor="#fafafa" align="${ aligns[i] || "left" }"><b>${ cell }</b></td>`).join("");
+        columns.map((col, i) => getCell(col.title, getAlign(col))).join("");
 
     return `<thead><tr>${ buildCells() }</tr></thead>`;
 }
 
-function buildRows(rows, aligns) {
+function buildRows(rows, columns) {
     const buildCells = cells =>
-        cells.map((cell, i) => `<td align="${ aligns[i] || "left" }">${ cell }</td>`);
+        cells.map((cell, i) => `<td align="${ getAlign(columns[i]) }">${ cell }</td>`);
     const buildRow = row => `<tr>${ buildCells(row).join("") }</tr>`;
 
     return `<tbody>${ rows.map(buildRow).join("") }</tbody>`;
@@ -17,17 +22,16 @@ function buildRows(rows, aligns) {
 
 class HtmlTable {
     constructor(options) {
-        this.headers   = options.head || [];
-        this.colAligns = options.colAligns || [];
-        this.rows = options.rows;
+        this.columns = options.columns;
+        this.rows    = options.rows;
     }
 
-    toString() {
+    toHtml() {
         return `
-        <table id="table">
-        ${ buildHeader(this.headers, this.colAligns) }
-        ${ buildRows(this.rows, this.colAligns) }
-        </table>
+<table id="table">
+        ${ buildHeader(this.columns) }
+        ${ buildRows(this.rows, this.columns) }
+</table>
 `;
     }
 }

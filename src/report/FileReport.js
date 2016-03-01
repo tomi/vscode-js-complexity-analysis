@@ -1,10 +1,12 @@
 "use strict";
 
-const MetricRow = require("./MetricRow");
-const Table = require("./Table");
-const ReportStyle = require("./ReportStyle");
+const HtmlBuilder    = require("./HtmlBuilder");
+const MetricRow      = require("./MetricRow");
+const ReportStyle    = require("./ReportStyle");
+const Header         = require("./Header");
+const FunctionsTable = require("./FunctionsTable");
 
-const Metrics = {
+const overviewMetrics = {
     maintainability:
     {
         title: "Maintainability",
@@ -37,31 +39,30 @@ const Metrics = {
     },
 };
 
-function buildBody(analysis) {
+function buildFileSummary(htmlBuilder, analysis) {
     const metrics = [
-        { metric: Metrics.maintainability, value: analysis.maintainability },
-        { metric: Metrics.loc,             value: analysis.sloc },
-        { metric: Metrics.difficulty,      value: analysis.difficulty },
-        { metric: Metrics.bugs,            value: analysis.bugs },
+        { metric: overviewMetrics.maintainability, value: analysis.maintainability },
+        { metric: overviewMetrics.loc,             value: analysis.sloc },
+        { metric: overviewMetrics.difficulty,      value: analysis.difficulty },
+        { metric: overviewMetrics.bugs,            value: analysis.bugs },
     ];
 
-    const summary = MetricRow(metrics);
-    const table   = new Table({
-        head: [ "Function", "Line", "Complexity" ],
-        colAligns: [ "left", "right", "right" ],
-        rows: analysis.functions.map(f => [f.name, f.line, f.cyclomatic])
-    });
-
-    return `<body>${ summary } ${ table }</body>`;
+    htmlBuilder
+        .appendBody(Header("Summary"))
+        .appendBody(MetricRow(metrics))
+        .appendBody(Header("Functions"))
+        .appendBody(FunctionsTable(analysis));
 }
 
 function FileReport(analysis) {
     function toHtml() {
-        const head = `<head><style>${ ReportStyle }</style></head>`;
+        const htmlBuilder = HtmlBuilder();
 
-        const body = buildBody(analysis);
+        htmlBuilder.appendStyle(ReportStyle);
 
-        return `<html>${ head }${ body }</html>`;
+        buildFileSummary(htmlBuilder, analysis);
+
+        return htmlBuilder.toHtml();
     }
 
     this.toHtml = toHtml;

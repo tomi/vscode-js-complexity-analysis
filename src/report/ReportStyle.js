@@ -2,6 +2,9 @@ const STYLE =
 `* {
     font-family: Verdana;
 }
+h1 {
+    font-size: 20px;
+}
 .metric-row {
     display: flex;
     justify-content: space-around;
