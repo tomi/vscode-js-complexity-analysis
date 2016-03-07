@@ -11,7 +11,7 @@ const columns = [
 ];
 
 function formatFile(filePath) {
-    return `<a href="jsComplexityAnalysis://complexity-analysis${ filePath }">${ filePath }</a>`;
+    return `<a href="http://localhost:9989${ filePath }">${ filePath }</a>`;
 }
 
 function formatCyclomaticComplexity(cyclomaticComplexity) {

@@ -13,8 +13,11 @@ const ProjectAnalysis = require("./models/ProjectAnalysis.js");
 const FileReport = require("./report/FileReport.js");
 const ProjectReport = require("./report/ProjectReport.js");
 const Navigator = require("./navigator");
+const Controller = require("./Controller");
 
 function AnalyseProject(reportFactory) {
+    let controller = new Controller();
+
     function findFiles(include, exclude) {
         return vscode.workspace.findFiles("**/*.js", "**/node_modules/**")
             .then(files => {
