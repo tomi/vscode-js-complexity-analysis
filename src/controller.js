@@ -5,7 +5,6 @@ const vscode = require("vscode");
 const config = require("./config").options;
 const Navigator = require("./navigator");
 const HttpService = require("./http-service");
-const HtmlBuilder = require("./report/html-builder");
 const ReportFactory = require("./report-factory");
 const HtmlReportProvider = require("./html-report-provider");
 const AnalyseFileCommand = require("./commands/analyse-file");

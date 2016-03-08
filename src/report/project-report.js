@@ -1,6 +1,6 @@
 "use strict";
 
-const htmlBuilder = require("./html-builder");
+const HtmlBuilder = require("./html-builder");
 const metricRow   = require("./metric-row");
 const reportStyle = require("./report-style");
 const header      = require("./header");
@@ -56,7 +56,7 @@ function buildProjectSummary(htmlBuilder, analysis, serviceUrl) {
 
 function ProjectReport(analysis, service) {
     function toHtml() {
-        const htmlBuilder = htmlBuilder();
+        const htmlBuilder = new HtmlBuilder();
         const serviceUrl = service.getServiceUrl();
 
         htmlBuilder.appendStyle(reportStyle);

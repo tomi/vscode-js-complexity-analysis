@@ -31,11 +31,9 @@ function HtmlBuilder() {
 </html>`;
     }
 
-    return {
-        appendStyle,
-        appendBody,
-        toHtml
-    };
+    this.appendStyle = appendStyle;
+    this.appendBody = appendBody;
+    this.toHtml = toHtml;
 }
 
 module.exports = HtmlBuilder;

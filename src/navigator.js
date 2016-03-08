@@ -16,10 +16,6 @@ function Navigator(options, reportProvider) {
     }
 
     function navigate(path) {
-        // if (path.startsWith("/")) {
-        //     path = path.substring(1);
-        // }
-
         const uri = vscode.Uri.parse(`${ options.scheme }://${ options.authority }${ path }`);
 
         const viewColumn = getTargetColumn();
