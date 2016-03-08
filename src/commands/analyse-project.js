@@ -64,20 +64,28 @@ function AnalyseProject(reportFactory, navigator, service) {
 
                     return analysis;
                 } catch (e) {
-                    console.error(`File ${ relativePath } analysis failed: ${ e }`);
-                    return undefined;
+                    const errorMsg = `File ${ relativePath } analysis failed: ${ e }`;
+                    console.error(errorMsg);
+                    return errorMsg;
                 }
             });
     }
 
     function createAggregateReport(analyses, channel, metrics) {
         const projectAnalysis = new ProjectAnalysis();
+        const errors = [];
 
-        analyses.filter(analysis => analysis !== undefined)
-            .forEach(x => projectAnalysis.add(x));
+        analyses.forEach(analysis => {
+            if (typeof analysis !== "string") {
+                projectAnalysis.add(analysis);
+            } else {
+                errors.push(analysis);
+            }
+        });
+
         const aggregate = projectAnalysis.getSummary();
 
-        const report = new ProjectReport(aggregate, service);
+        const report = new ProjectReport(aggregate, errors, service);
         reportFactory.addReport("/", report);
 
         navigator.navigate("/");

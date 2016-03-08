@@ -39,7 +39,11 @@ const overviewMetrics = {
     },
 };
 
-function buildProjectSummary(htmlBuilder, analysis, serviceUrl) {
+function getErrors(errors) {
+    return errors.join("<br/>");
+}
+
+function buildProjectSummary(htmlBuilder, analysis, errors, serviceUrl) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.avgMaintainability },
         { metric: overviewMetrics.loc,             value: analysis.totalSloc },
@@ -52,16 +56,22 @@ function buildProjectSummary(htmlBuilder, analysis, serviceUrl) {
         .appendBody(metricRow(metrics))
         .appendBody(header("Files"))
         .appendBody(filesTable(analysis, serviceUrl));
+
+    if (errors.length > 0) {
+        htmlBuilder
+            .appendBody(header("Errors"))
+            .appendBody(getErrors(errors));
+    }
 }
 
-function ProjectReport(analysis, service) {
+function ProjectReport(analysis, errors, service) {
     function toHtml() {
         const htmlBuilder = new HtmlBuilder();
         const serviceUrl = service.getServiceUrl();
 
         htmlBuilder.appendStyle(reportStyle);
 
-        buildProjectSummary(htmlBuilder, analysis, serviceUrl);
+        buildProjectSummary(htmlBuilder, analysis, errors, serviceUrl);
 
         return htmlBuilder.toHtml();
     }
