@@ -1,6 +1,6 @@
 "use strict";
 
-function RowFactory() {
+function ReportFactory() {
     // Key: report uri as string
     // Value: FileReport
     const reports = new Map();
@@ -13,8 +13,13 @@ function RowFactory() {
         return reports.get(uri);
     }
 
+    function clear() {
+        reports.clear();
+    }
+
     this.addReport = addReport;
     this.getReport = getReport;
+    this.clear     = clear;
 }
 
-module.exports = RowFactory;
+module.exports = ReportFactory;

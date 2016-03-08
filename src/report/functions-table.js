@@ -1,8 +1,8 @@
 "use strict";
 
-const Table = require("./Table");
+const Table = require("./table");
 const utils = require("../utils");
-const icons = require("./Icons");
+const icons = require("./icons");
 
 const columns = [
     { title: "Function",   align: "left"  },

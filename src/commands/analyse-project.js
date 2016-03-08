@@ -3,21 +3,16 @@
 const fs       = require("fs");
 const vscode   = require("vscode");
 const minimatch= require("minimatch");
-const analyser = require("./complexity-analyzer");
-const reporter = require("./report-builder.js");
-const config   = require("./config");
-const Output   = require("./output-channel");
-const utils    = require("./utils");
-const FileAnalysis = require("./models/FileAnalysis.js");
-const ProjectAnalysis = require("./models/ProjectAnalysis.js");
-const FileReport = require("./report/FileReport.js");
-const ProjectReport = require("./report/ProjectReport.js");
-const Navigator = require("./navigator");
-const Controller = require("./Controller");
+const analyser = require("../complexity-analyzer");
+const reporter = require("../report-builder.js");
+const config   = require("../config");
+const utils    = require("../utils");
+const FileAnalysis = require("../models/file-analysis.js");
+const ProjectAnalysis = require("../models/project-analysis.js");
+const FileReport = require("../report/file-report.js");
+const ProjectReport = require("../report/project-report.js");
 
-function AnalyseProject(reportFactory) {
-    let controller = new Controller();
-
+function AnalyseProject(reportFactory, navigator, service) {
     function findFiles(include, exclude) {
         return vscode.workspace.findFiles("**/*.js", "**/node_modules/**")
             .then(files => {
@@ -28,9 +23,6 @@ function AnalyseProject(reportFactory) {
     }
 
     function buildReport(document) {
-        // const metrics = config.getMetrics();
-        // const legend = reporter.getLegend(metrics);
-        // channel.write(legend)
         const project = new ProjectAnalysis();
 
         const include = config.getInclude();
@@ -66,12 +58,9 @@ function AnalyseProject(reportFactory) {
                 try {
                     const rawAnalysis = analyser.analyse(fileContents);
                     const analysis = new FileAnalysis(relativePath, rawAnalysis);
-                    // project.add(analysis);
 
-                    const report = new FileReport(analysis);
+                    const report = new FileReport(analysis, service);
                     reportFactory.addReport(relativePath, report);
-                    // const report = reporter.buildFileReport(analysis, metrics);
-                    // channel.write(report);
 
                     return analysis;
                 } catch (e) {
@@ -88,11 +77,10 @@ function AnalyseProject(reportFactory) {
             .forEach(x => projectAnalysis.add(x));
         const aggregate = projectAnalysis.getSummary();
 
-        const report = new ProjectReport(aggregate);
-        reportFactory.addReport("/.", report);
+        const report = new ProjectReport(aggregate, service);
+        reportFactory.addReport("/", report);
 
-        Navigator.navigate(".");
-        // channel.write(report);
+        navigator.navigate("/");
     }
 
     function handleError(error) {
@@ -109,9 +97,7 @@ function AnalyseProject(reportFactory) {
         }
     }
 
-    return {
-        execute: runAnalysis
-    };
+    this.execute = runAnalysis;
 }
 
 module.exports = AnalyseProject;

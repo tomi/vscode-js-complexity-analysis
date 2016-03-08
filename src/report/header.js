@@ -1,7 +1,7 @@
 "use strict";
 
-function Header(title) {
+function header(title) {
     return `<h1>${ title }</h1>`;
 }
 
-module.exports = Header;
+module.exports = header;

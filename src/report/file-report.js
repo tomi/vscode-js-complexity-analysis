@@ -1,10 +1,11 @@
 "use strict";
 
-const HtmlBuilder    = require("./HtmlBuilder");
-const MetricRow      = require("./MetricRow");
-const ReportStyle    = require("./ReportStyle");
-const Header         = require("./Header");
-const FunctionsTable = require("./FunctionsTable");
+const htmlBuilder    = require("./html-builder");
+const metricRow      = require("./metric-row");
+const reportStyle    = require("./report-style");
+const header         = require("./header");
+const functionsTable = require("./functions-table");
+const link           = require("./link");
 
 const overviewMetrics = {
     maintainability:
@@ -39,7 +40,11 @@ const overviewMetrics = {
     },
 };
 
-function buildFileSummary(htmlBuilder, analysis) {
+function backLink(serviceUrl) {
+    return `<br><br>${ link(serviceUrl, "&#9664; back") }`;
+}
+
+function buildFileSummary(htmlBuilder, analysis, serviceUrl) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.maintainability },
         { metric: overviewMetrics.loc,             value: analysis.sloc },
@@ -48,19 +53,21 @@ function buildFileSummary(htmlBuilder, analysis) {
     ];
 
     htmlBuilder
-        .appendBody(Header("Summary"))
-        .appendBody(MetricRow(metrics))
-        .appendBody(Header("Functions"))
-        .appendBody(FunctionsTable(analysis));
+        .appendBody(header("Summary"))
+        .appendBody(metricRow(metrics))
+        .appendBody(header("Functions"))
+        .appendBody(functionsTable(analysis))
+        .appendBody(backLink(serviceUrl));
 }
 
-function FileReport(analysis) {
+function FileReport(analysis, service) {
     function toHtml() {
-        const htmlBuilder = HtmlBuilder();
+        const htmlBuilder = htmlBuilder();
+        const serviceUrl = service.getServiceUrl();
 
-        htmlBuilder.appendStyle(ReportStyle);
+        htmlBuilder.appendStyle(reportStyle);
 
-        buildFileSummary(htmlBuilder, analysis);
+        buildFileSummary(htmlBuilder, analysis, serviceUrl);
 
         return htmlBuilder.toHtml();
     }

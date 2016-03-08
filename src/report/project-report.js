@@ -1,10 +1,10 @@
 "use strict";
 
-const HtmlBuilder    = require("./HtmlBuilder");
-const MetricRow      = require("./MetricRow");
-const ReportStyle    = require("./ReportStyle");
-const Header         = require("./Header");
-const FilesTable = require("./FilesTable");
+const htmlBuilder = require("./html-builder");
+const metricRow   = require("./metric-row");
+const reportStyle = require("./report-style");
+const header      = require("./header");
+const filesTable  = require("./files-table");
 
 const overviewMetrics = {
     maintainability:
@@ -39,7 +39,7 @@ const overviewMetrics = {
     },
 };
 
-function buildProjectSummary(htmlBuilder, analysis) {
+function buildProjectSummary(htmlBuilder, analysis, serviceUrl) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.avgMaintainability },
         { metric: overviewMetrics.loc,             value: analysis.totalSloc },
@@ -48,19 +48,20 @@ function buildProjectSummary(htmlBuilder, analysis) {
     ];
 
     htmlBuilder
-        .appendBody(Header("Summary"))
-        .appendBody(MetricRow(metrics))
-        .appendBody(Header("Files"))
-        .appendBody(FilesTable(analysis));
+        .appendBody(header("Summary"))
+        .appendBody(metricRow(metrics))
+        .appendBody(header("Files"))
+        .appendBody(filesTable(analysis, serviceUrl));
 }
 
-function ProjectReport(analysis) {
+function ProjectReport(analysis, service) {
     function toHtml() {
-        const htmlBuilder = HtmlBuilder();
+        const htmlBuilder = htmlBuilder();
+        const serviceUrl = service.getServiceUrl();
 
-        htmlBuilder.appendStyle(ReportStyle);
+        htmlBuilder.appendStyle(reportStyle);
 
-        buildProjectSummary(htmlBuilder, analysis);
+        buildProjectSummary(htmlBuilder, analysis, serviceUrl);
 
         return htmlBuilder.toHtml();
     }

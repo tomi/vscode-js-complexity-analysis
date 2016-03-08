@@ -1,34 +1,37 @@
 "use strict";
 
 const vscode = require("vscode");
-const options = require("./config").options.navigation;
 
-const CHANNEL_NAME = "Complexity Report";
+function Navigator(options, reportProvider) {
+    function getTargetColumn() {
+        const numOpenEditors = vscode.window.visibleTextEditors.length;
 
-function getTargetColumn() {
-    const numOpenEditors = vscode.window.visibleTextEditors.length;
-
-    switch (numOpenEditors) {
-        case 0:  return vscode.ViewColumn.One;
-        case 1:  return vscode.ViewColumn.Two;
-        case 2:  return vscode.ViewColumn.Three;
-        case 3:  return vscode.ViewColumn.Three;
-        default: return vscode.ViewColumn.One;
-    }
-}
-
-function navigate(path) {
-    if (path.startsWith("/")) {
-        path = path.substring(1);
+        switch (numOpenEditors) {
+            case 0:  return vscode.ViewColumn.One;
+            case 1:  return vscode.ViewColumn.Two;
+            case 2:  return vscode.ViewColumn.Three;
+            case 3:  return vscode.ViewColumn.Three;
+            default: return vscode.ViewColumn.One;
+        }
     }
 
-    const uri = vscode.Uri.parse(`${ options.scheme }://${ options.authority }/${ path }`);
+    function navigate(path) {
+        // if (path.startsWith("/")) {
+        //     path = path.substring(1);
+        // }
 
-    const viewColumn = getTargetColumn();
+        const uri = vscode.Uri.parse(`${ options.scheme }://${ options.authority }${ path }`);
 
-    return vscode.commands.executeCommand("vscode.previewHtml", uri, viewColumn);
+        const viewColumn = getTargetColumn();
+
+        console.log("Executing previewHtml for ", path);
+
+        vscode.commands.executeCommand("vscode.previewHtml", uri, viewColumn)
+            .then(() => {}, () => vscode.window.showErrorMessage(e));
+        reportProvider.update(uri);
+    }
+
+    this.navigate = navigate;
 }
 
-module.exports = {
-    navigate
-};
+module.exports = Navigator;

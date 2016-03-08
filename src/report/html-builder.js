@@ -1,9 +1,7 @@
 "use strict";
 
 function getStyleDefinition(css) {
-    return css ?
-        `<style>${ css }</style>` :
-        "";
+    return css ? `<style>${ css }</style>` : "";
 }
 
 function HtmlBuilder() {

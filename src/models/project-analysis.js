@@ -1,6 +1,6 @@
 "use strict";
 
-const FileAnalysis = require("./FileAnalysis.js");
+const FileAnalysis = require("./file-analysis");
 
 function calculateAverages(analyses) {
     const result = {};

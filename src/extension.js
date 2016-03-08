@@ -1,31 +1,13 @@
 "use strict";
 
-const HtmlReportProvider = require("./report/HtmlReportProvider.js");
-const ReportFactory = require("./report/ReportFactory.js");
-
-const reportFactory  = new ReportFactory();
-const reportProvider = new HtmlReportProvider(reportFactory);
-
 const vscode  = require("vscode");
-const analyseFile = require("./analyse-file")(reportFactory);
-const analyseProject = require("./analyse-project")(reportFactory);
-
-const registerForEditor = vscode.commands.registerTextEditorCommand;
-const register = vscode.commands.registerCommand;
+const Controller = require("./controller");
 
 function activate(context) {
-	const commands = [
-        registerForEditor("complexityAnalysis.analyseFile", analyseFile.execute),
-        register("complexityAnalysis.analyseProject", analyseProject.execute)
-    ];
+    const controller = new Controller(context);
 
-    commands.forEach(cmd =>
-	   context.subscriptions.push(cmd)
-    );
-
-    const registration = reportProvider.register();
-
-    context.subscriptions.push(registration);
+    context.subscriptions.push(controller);
+    controller.activate();
 }
 
 exports.activate = activate;

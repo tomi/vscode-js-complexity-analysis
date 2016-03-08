@@ -54,6 +54,10 @@ table td{
 table thead td{
 	font-weight:bold;
 }
+a:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
 `;
 
 module.exports = STYLE;

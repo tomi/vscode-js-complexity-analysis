@@ -1,12 +1,11 @@
 "use strict";
 
 const vscode   = require("vscode");
-const analyser = require("./complexity-analyzer");
-const FileAnalysis = require("./models/FileAnalysis.js");
-const FileReport = require("./report/FileReport.js");
-const Navigator = require("./navigator");
+const analyser = require("../complexity-analyzer");
+const FileAnalysis = require("../models/file-analysis.js");
+const FileReport = require("../report/file-report.js");
 
-function AnalyseFile(reportFactory) {
+function AnalyseFile(reportFactory, navigator) {
 
     function buildReport(document) {
         const filePath = vscode.workspace.asRelativePath(document.fileName);
@@ -18,7 +17,7 @@ function AnalyseFile(reportFactory) {
         const report = new FileReport(analysis);
         reportFactory.addReport(filePath, report);
 
-        Navigator.navigate(filePath);
+        navigator.navigate(filePath);
     }
 
     function runAnalysis(editor) {
@@ -30,9 +29,7 @@ function AnalyseFile(reportFactory) {
         }
     }
 
-    return {
-        execute: runAnalysis
-    };
+    this.execute = runAnalysis;
 }
 
 module.exports = AnalyseFile;

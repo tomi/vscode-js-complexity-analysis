@@ -2,7 +2,7 @@
 
 const dot = require("dot");
 const utils = require("./../utils.js")
-const icons = require("./Icons");
+const icons = require("./icons");
 
 const template = dot.template(`
 <div class="metric">

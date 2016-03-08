@@ -1,8 +1,9 @@
 "use strict";
 
-const Table = require("./Table");
+const Table = require("./table");
 const utils = require("../utils");
-const icons = require("./Icons");
+const icons = require("./icons");
+const link  = require("./link");
 
 const columns = [
     { title: "Name",       align: "left"  },
@@ -10,8 +11,8 @@ const columns = [
     { title: "Complexity", align: "right" }
 ];
 
-function formatFile(filePath) {
-    return `<a href="http://localhost:9989${ filePath }">${ filePath }</a>`;
+function formatFile(serviceUrl, filePath) {
+    return link(serviceUrl + filePath, filePath);
 }
 
 function formatCyclomaticComplexity(cyclomaticComplexity) {
@@ -26,9 +27,9 @@ function formatCyclomaticComplexity(cyclomaticComplexity) {
     }
 }
 
-function FilesTable(analysis) {
+function FilesTable(analysis, serviceUrl) {
     const rows = analysis.fileAnalyses.map(f => [
-        formatFile(f.path),
+        formatFile(serviceUrl, f.path),
         f.sloc,
         formatCyclomaticComplexity(f.cyclomatic)
     ]);
