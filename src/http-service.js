@@ -2,8 +2,6 @@
 
 const http = require("http");
 
-let port;
-
 function HttpService(router) {
     const server = http.createServer(requestHandler);
 
@@ -15,8 +13,7 @@ function HttpService(router) {
     }
 
     function start() {
-        port = server.listen(0).address().port;
-        this.port = port;
+        this.port = server.listen(0).address().port;
     }
 
     function stop() {

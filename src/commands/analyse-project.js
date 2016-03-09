@@ -4,7 +4,6 @@ const fs       = require("fs");
 const vscode   = require("vscode");
 const minimatch= require("minimatch");
 const analyser = require("../complexity-analyzer");
-const reporter = require("../report-builder.js");
 const config   = require("../config");
 const utils    = require("../utils");
 const FileAnalysis = require("../models/file-analysis.js");
