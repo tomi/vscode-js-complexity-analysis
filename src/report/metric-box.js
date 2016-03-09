@@ -40,9 +40,19 @@ function getIcon(metric, value) {
     }
 }
 
+/**
+ * @param  {any} options:
+ * - metric: Metric to show
+ *   - title
+ *   - description (optional)
+ *   - infoUrl (optional)
+ *   - errorRange (optional)
+ *   - warningRange (optional)
+ * - value: Value of the metric
+ */
 function MetricBox(options) {
     const metric = options.metric;
-    const value = options.value;
+    const value  = options.value;
 
     return template({
         icon:  getIcon(metric, value),
