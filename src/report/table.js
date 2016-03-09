@@ -1,23 +1,39 @@
 "use strict";
 
+const dot = require("dot");
+
+const tableTemplate = dot.template(`
+<table>
+    <thead>{{= it.header }}</thead>
+    <tbody>{{= it.body }}</tbody>
+</table>
+`);
+
+const rowTemplate = dot.template(`<tr>{{= it.cells }}</tr>`);
+
+const cellTemplate = dot.template(`<td align="{{= it.align }}">{{= it.value }}</td>`);
+
 function getAlign(column) {
     return column.align || "left";
 }
 
-function buildHeader(columns) {
-    const getCell = (cell, align) => `<td align="${ align }"><b>${ cell }</b></td>`;
-    const buildCells = () =>
-        columns.map((col, i) => getCell(col.title, getAlign(col))).join("");
+function getCell(align, value) {
+    return cellTemplate({ align, value });
+}
 
-    return `<thead><tr>${ buildCells() }</tr></thead>`;
+function buildHeader(columns) {
+    const buildCells = () =>
+        columns.map((col, i) => getCell(getAlign(col), col.title)).join("");
+
+    return rowTemplate({ cells: buildCells() });
 }
 
 function buildRows(rows, columns) {
     const buildCells = cells =>
-        cells.map((cell, i) => `<td align="${ getAlign(columns[i]) }">${ cell }</td>`);
-    const buildRow = row => `<tr>${ buildCells(row).join("") }</tr>`;
+        cells.map((cell, i) => getCell(getAlign(columns[i]), cell));
+    const buildRow = row => rowTemplate({ cells: buildCells(row).join("") });
 
-    return `<tbody>${ rows.map(buildRow).join("") }</tbody>`;
+    return rows.map(buildRow).join("");
 }
 
 class HtmlTable {
@@ -27,12 +43,10 @@ class HtmlTable {
     }
 
     toHtml() {
-        return `
-<table id="table">
-        ${ buildHeader(this.columns) }
-        ${ buildRows(this.rows, this.columns) }
-</table>
-`;
+        return tableTemplate({
+            header: buildHeader(this.columns),
+            body:   buildRows(this.rows, this.columns)
+        });
     }
 }
 
