@@ -9,7 +9,7 @@ const filesTable  = require("./files-table");
 const overviewMetrics = {
     maintainability:
     {
-        title: "Maintainability",
+        title: "Average Maintainability",
         description: "Value between 0 and 100. Represents the relative ease of maintaining the code. A high value means better maintainability.",
         errorRange: [0, 10],
         warningRange: [10, 20],
@@ -20,23 +20,7 @@ const overviewMetrics = {
         title: "Lines of code",
         description: "Logical number of source lines of code.",
         infoUrl: "https://en.wikipedia.org/wiki/Source_lines_of_code"
-    },
-    difficulty:
-    {
-        title: "Difficulty",
-        description: "How difficult it is to write or understand the program.",
-        errorRange: [60, 9999],
-        warningRange: [30, 60],
-        infoUrl: "https://en.wikipedia.org/wiki/Halstead_complexity_measures"
-    },
-    bugs:
-    {
-        title: "Estimated # of Bugs",
-        description: "Estimate for the number of errors in the implementation.",
-        errorRange: [60, 9999],
-        warningRange: [30, 60],
-        infoUrl: "https://en.wikipedia.org/wiki/Halstead_complexity_measures"
-    },
+    }
 };
 
 function getErrors(errors) {
@@ -46,9 +30,7 @@ function getErrors(errors) {
 function buildProjectSummary(htmlBuilder, analysis, errors, serviceUrl) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.avgMaintainability },
-        { metric: overviewMetrics.loc,             value: analysis.totalSloc },
-        { metric: overviewMetrics.difficulty,      value: analysis.difficulty },
-        { metric: overviewMetrics.bugs,            value: analysis.bugs },
+        { metric: overviewMetrics.loc,             value: analysis.totalSloc }
     ];
 
     htmlBuilder
