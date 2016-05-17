@@ -1,5 +1,9 @@
 # History
 
+## [1.0.0] - 2016-05-17
+### Changed
+- HTML output for the report with navigation between files
+
 ## [0.2.2] - 2016-02-23
 ### Fixed
 - Fixed bug in "Project complexity analysis" that caused incorrect paths on Windows machines.
@@ -22,7 +26,8 @@
 - Complexity analysis command.
 - Option to configure calculated metrics per function.
 
-[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.2...HEAD
+[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.0...HEAD
+[1.0.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.0...v0.2.2
 [0.2.2]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.0...v0.2.1
 [0.2.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.1.0...v0.2.0
