@@ -1,19 +1,12 @@
-const vscode  = require("vscode");
-const analyseFile = require("./analyse-file");
-const analyseProject = require("./analyse-project");
+"use strict";
 
-const registerForEditor = vscode.commands.registerTextEditorCommand;
-const register = vscode.commands.registerCommand;
+const Controller = require("./controller");
 
 function activate(context) {
-	const commands = [
-        registerForEditor("complexityAnalysis.analyseFile", analyseFile.execute),
-        register("complexityAnalysis.analyseProject", analyseProject.execute)
-    ];
+    const controller = new Controller(context);
 
-    commands.forEach(cmd =>
-	   context.subscriptions.push(cmd)
-    );
+    context.subscriptions.push(controller);
+    controller.activate();
 }
 
 exports.activate = activate;
