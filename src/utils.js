@@ -21,6 +21,10 @@ function average(array) {
 }
 
 function max(array) {
+    if (array.length === 0) {
+        return 0;
+    }
+
     return Math.max.apply(null, array);
 }
 
