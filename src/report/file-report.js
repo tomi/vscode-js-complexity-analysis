@@ -40,11 +40,11 @@ const overviewMetrics = {
     },
 };
 
-function backLink(serviceUrl) {
-    return `<br><br>${ link(serviceUrl, "&#9664; back") }`;
+function backLink() {
+    return `<br><br>${ link("/", "&#9664; back") }`;
 }
 
-function buildFileSummary(htmlBuilder, analysis, serviceUrl) {
+function buildFileSummary(htmlBuilder, analysis) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.maintainability },
         { metric: overviewMetrics.loc,             value: analysis.sloc },
@@ -57,17 +57,16 @@ function buildFileSummary(htmlBuilder, analysis, serviceUrl) {
         .appendBody(metricRow(metrics))
         .appendBody(header("Functions"))
         .appendBody(functionsTable(analysis))
-        .appendBody(backLink(serviceUrl));
+        .appendBody(backLink());
 }
 
-function FileReport(analysis, service) {
+function FileReport(analysis) {
     function toHtml() {
         const htmlBuilder = new HtmlBuilder();
-        const serviceUrl = service.getServiceUrl();
 
         htmlBuilder.appendStyle(reportStyle);
 
-        buildFileSummary(htmlBuilder, analysis, serviceUrl);
+        buildFileSummary(htmlBuilder, analysis);
 
         return htmlBuilder.toHtml();
     }

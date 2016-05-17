@@ -11,7 +11,7 @@ const ProjectAnalysis = require("../models/project-analysis.js");
 const FileReport = require("../report/file-report.js");
 const ProjectReport = require("../report/project-report.js");
 
-function AnalyseProject(reportFactory, navigator, service) {
+function AnalyseProject(reportFactory, navigator) {
     function findFiles(include, exclude) {
         return vscode.workspace.findFiles("**/*.js", "**/node_modules/**")
             .then(files => {
@@ -58,7 +58,7 @@ function AnalyseProject(reportFactory, navigator, service) {
                     const rawAnalysis = analyser.analyse(fileContents);
                     const analysis = new FileAnalysis(relativePath, rawAnalysis);
 
-                    const report = new FileReport(analysis, service);
+                    const report = new FileReport(analysis);
                     reportFactory.addReport(relativePath, report);
 
                     return analysis;
@@ -84,7 +84,7 @@ function AnalyseProject(reportFactory, navigator, service) {
 
         const aggregate = projectAnalysis.getSummary();
 
-        const report = new ProjectReport(aggregate, errors, service);
+        const report = new ProjectReport(aggregate, errors);
         reportFactory.addReport("/", report);
 
         navigator.navigate("/");

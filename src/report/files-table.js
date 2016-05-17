@@ -11,8 +11,8 @@ const columns = [
     { title: "Complexity", align: "right" }
 ];
 
-function formatFile(serviceUrl, filePath) {
-    return link(serviceUrl + filePath, filePath);
+function formatFile(filePath) {
+    return link(filePath, filePath);
 }
 
 function formatCyclomaticComplexity(cyclomaticComplexity) {
@@ -27,9 +27,9 @@ function formatCyclomaticComplexity(cyclomaticComplexity) {
     }
 }
 
-function FilesTable(analysis, serviceUrl) {
+function FilesTable(analysis) {
     const rows = analysis.fileAnalyses.map(f => [
-        formatFile(serviceUrl, f.path),
+        formatFile(f.path),
         f.sloc,
         formatCyclomaticComplexity(f.cyclomatic)
     ]);

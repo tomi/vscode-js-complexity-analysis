@@ -2,6 +2,9 @@ const STYLE =
 `* {
     font-family: Verdana;
 }
+body {
+    margin: 5px;
+}
 h1 {
     font-size: 20px;
 }

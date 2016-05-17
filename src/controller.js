@@ -4,7 +4,6 @@ const vscode = require("vscode");
 
 const config = require("./config").options;
 const Navigator = require("./navigator");
-const HttpService = require("./http-service");
 const ReportFactory = require("./report-factory");
 const HtmlReportProvider = require("./html-report-provider");
 const AnalyseFileCommand = require("./commands/analyse-file");
@@ -17,9 +16,8 @@ function Controller(context) {
     const reportFactory     = new ReportFactory();
     const reportProvider    = new HtmlReportProvider(reportFactory, config.navigation);
     const navigator         = new Navigator(config.navigation, reportProvider);
-    const service           = new HttpService(navigator);
     const cmdAnalyseFile    = new AnalyseFileCommand(reportFactory, navigator);
-    const cmdAnalyseProject = new AnalyseProjectCommand(reportFactory, navigator, service);
+    const cmdAnalyseProject = new AnalyseProjectCommand(reportFactory, navigator);
 
     function activate() {
         context.subscriptions.push(
@@ -33,12 +31,9 @@ function Controller(context) {
         context.subscriptions.push(
             vscode.workspace.registerTextDocumentContentProvider(
                 config.navigation.scheme, reportProvider));
-
-        service.start();
     }
 
     function dispose() {
-        service.stop();
     }
 
     this.activate = activate;

@@ -24,7 +24,7 @@ function formatCyclomaticComplexity(cyclomaticComplexity) {
     }
 }
 
-function formatName(name) {
+function formatName(name, line) {
     return name
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
@@ -35,7 +35,7 @@ function formatName(name) {
 
 function FunctionsTable(analysis) {
     const rows = analysis.functions.map(f => [
-        formatName(f.name),
+        formatName(f.name, f.line),
         f.line,
         f.sloc,
         f.params,
