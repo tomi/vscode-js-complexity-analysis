@@ -23,7 +23,7 @@ function Navigator(options, reportProvider) {
         console.log("Executing previewHtml for ", path);
 
         vscode.commands.executeCommand("vscode.previewHtml", uri, viewColumn)
-            .then(() => {}, () => vscode.window.showErrorMessage(e));
+            .then(() => {}, e => vscode.window.showErrorMessage(e));
         reportProvider.update(uri);
     }
 

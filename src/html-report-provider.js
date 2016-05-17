@@ -16,7 +16,7 @@ function HtmlReportProvider(reportFactory, options) {
             return html;
         }
 
-        return `Invalid uri ${ uri }`;
+        return `Invalid path ${ path }`;
     }
 
     this.provideTextDocumentContent = function(uri) {

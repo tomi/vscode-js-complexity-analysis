@@ -1,6 +1,5 @@
 "use strict";
 
-const vscode  = require("vscode");
 const Controller = require("./controller");
 
 function activate(context) {

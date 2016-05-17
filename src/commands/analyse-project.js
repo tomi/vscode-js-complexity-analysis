@@ -1,15 +1,16 @@
 "use strict";
 
-const fs       = require("fs");
-const vscode   = require("vscode");
-const minimatch= require("minimatch");
-const analyser = require("../complexity-analyzer");
-const config   = require("../config");
-const utils    = require("../utils");
-const FileAnalysis = require("../models/file-analysis.js");
+const fs        = require("fs");
+const vscode    = require("vscode");
+const minimatch = require("minimatch");
+const analyser  = require("../complexity-analyzer");
+const config    = require("../config");
+const utils     = require("../utils");
+
+const FileAnalysis    = require("../models/file-analysis.js");
 const ProjectAnalysis = require("../models/project-analysis.js");
-const FileReport = require("../report/file-report.js");
-const ProjectReport = require("../report/project-report.js");
+const FileReport      = require("../report/file-report.js");
+const ProjectReport   = require("../report/project-report.js");
 
 function AnalyseProject(reportFactory, navigator) {
     function findFiles(include, exclude) {

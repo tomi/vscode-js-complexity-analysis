@@ -31,7 +31,7 @@ function get(object, path, defaultValue) {
         object = object[path[index++]];
     }
 
-    return (index && index == length && object !== undefined) ? object : defaultValue;
+    return index && index == length && object !== undefined ? object : defaultValue;
 }
 
 function round(num) {

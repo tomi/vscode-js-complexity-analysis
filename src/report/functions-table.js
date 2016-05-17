@@ -2,7 +2,6 @@
 
 const Table = require("./table");
 const formatter = require("./metric-formatter.js");
-const icons = require("./icons");
 const link  = require("./link.js").fileLineLink;
 
 const columns = [
