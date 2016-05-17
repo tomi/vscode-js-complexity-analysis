@@ -5,7 +5,7 @@
   "version": "0.2.2",
   "publisher": "TomiTurtiainen",
   "engines": {
-    "vscode": "^0.10.7"
+    "vscode": "^1.1.0"
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install"
@@ -46,7 +46,7 @@
     "theme": "light"
   },
   "devDependencies": {
-    "vscode": "^0.11.0"
+    "vscode": "^0.11.12"
   },
   "dependencies": {
     "dot": "^1.0.3",
