@@ -3,7 +3,7 @@
 const Table = require("./table");
 const utils = require("../utils");
 const icons = require("./icons");
-const link  = require("./link");
+const link  = require("./link").localLink;
 
 const columns = [
     { title: "Name",       align: "left"  },

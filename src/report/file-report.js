@@ -5,7 +5,7 @@ const metricRow      = require("./metric-row");
 const reportStyle    = require("./report-style");
 const header         = require("./header");
 const functionsTable = require("./functions-table");
-const link           = require("./link");
+const link           = require("./link").localLink;
 
 const overviewMetrics = {
     maintainability:

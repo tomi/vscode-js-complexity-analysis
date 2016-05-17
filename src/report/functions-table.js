@@ -3,6 +3,7 @@
 const Table = require("./table");
 const utils = require("../utils");
 const icons = require("./icons");
+const link  = require("./link.js").fileLineLink;
 
 const columns = [
     { title: "Function",   align: "left"  },
@@ -24,18 +25,22 @@ function formatCyclomaticComplexity(cyclomaticComplexity) {
     }
 }
 
-function formatName(name, line) {
-    return name
+function formatName(filePath, name, line) {
+    const encodedName = name
         .replace(/&/g, "&amp;")
         .replace(/</g, "&lt;")
         .replace(/>/g, "&gt;")
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
+
+    return link(encodedName, filePath, line);
 }
 
 function FunctionsTable(analysis) {
+    const filePath = analysis.path;
+
     const rows = analysis.functions.map(f => [
-        formatName(f.name, f.line),
+        formatName(filePath, f.name, f.line),
         f.line,
         f.sloc,
         f.params,
