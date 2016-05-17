@@ -20,7 +20,6 @@ function HtmlReportProvider(reportFactory, options) {
     }
 
     this.provideTextDocumentContent = function(uri) {
-        console.log("Html for", uri.path);
         const path = uri.path;
 
         return getHtml(path);

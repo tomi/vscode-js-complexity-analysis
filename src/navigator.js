@@ -20,8 +20,6 @@ function Navigator(options, reportProvider) {
 
         const viewColumn = getTargetColumn();
 
-        console.log("Executing previewHtml for ", path);
-
         vscode.commands.executeCommand("vscode.previewHtml", uri, viewColumn)
             .then(() => {}, e => vscode.window.showErrorMessage(e));
         reportProvider.update(uri);
