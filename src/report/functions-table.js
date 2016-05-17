@@ -6,7 +6,6 @@ const link  = require("./link.js").fileLineLink;
 
 const columns = [
     { title: "Function",   align: "left"  },
-    { title: "Line",       align: "right" },
     { title: "SLOC",       align: "right" },
     { title: "# params",   align: "right" },
     { title: "Complexity", align: "right" },
@@ -30,7 +29,6 @@ function FunctionsTable(analysis) {
 
     const rows = analysis.functions.map(f => [
         formatName(filePath, f.name, f.line),
-        f.line,
         f.sloc,
         f.params,
         formatter.formatMetric(f.cyclomatic, 6, 10),
