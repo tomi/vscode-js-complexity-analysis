@@ -41,7 +41,7 @@ const overviewMetrics = {
 };
 
 function backLink() {
-    return `<br><br>${ link("/", "&#9664; back") }`;
+    return `${ link("/", "&#9664; back") }`;
 }
 
 function buildFileSummary(htmlBuilder, analysis) {
@@ -57,6 +57,7 @@ function buildFileSummary(htmlBuilder, analysis) {
         .appendBody(metricRow(metrics))
         .appendBody(header("Functions"))
         .appendBody(functionsTable(analysis))
+        .appendBody("<br><br>")
         .appendBody(backLink());
 }
 

@@ -12,6 +12,14 @@ function sum(array) {
     return array.reduce((prevVal, currVal) => prevVal + currVal, 0);
 }
 
+function average(array) {
+    return sum(array) / array.length;
+}
+
+function max(array) {
+    return Math.max.apply(null, array);
+}
+
 // Like in lodash
 function get(object, path, defaultValue) {
     path = path.split(".");
@@ -26,14 +34,16 @@ function get(object, path, defaultValue) {
     return (index && index == length && object !== undefined) ? object : defaultValue;
 }
 
-function roundToTwo(num) {
-    return +(Math.round(num + "e+2") + "e-2");
+function round(num) {
+    return +(Math.round(num + "e+1") + "e-1");
 }
 
 module.exports = {
     all,
     none,
     sum,
-    roundToTwo,
-    get: get
+    average,
+    max,
+    round,
+    get
 };

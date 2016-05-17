@@ -56,7 +56,7 @@ function MetricBox(options) {
 
     return template({
         icon:  getIcon(metric, value),
-        value: utils.roundToTwo(value),
+        value: utils.round(value),
         title: getTitle(metric)
     });
 }
