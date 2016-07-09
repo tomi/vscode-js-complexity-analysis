@@ -22,7 +22,7 @@ function AnalyseProject(reportFactory, navigator) {
             });
     }
 
-    function buildReport(document) {
+    function buildReport() {
         const project = new ProjectAnalysis();
 
         const include = config.getInclude();
@@ -96,9 +96,9 @@ function AnalyseProject(reportFactory, navigator) {
         console.log(error);
     }
 
-    function runAnalysis(editor) {
+    function runAnalysis() {
         try {
-            buildReport(editor.document)
+            buildReport()
                 .then(null, handleError);
         } catch (error) {
             handleError(error);
