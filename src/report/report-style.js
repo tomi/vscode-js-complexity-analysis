@@ -32,7 +32,6 @@ h1 {
 }
 .metric-title a {
     font-size: 20px;
-    color: inherit;
 }
 .metric-title span {
     font-size: 20px;
@@ -56,6 +55,9 @@ table td{
 }
 table thead td{
 	font-weight:bold;
+}
+a {
+    color: inherit;
 }
 a:hover {
     cursor: pointer;
