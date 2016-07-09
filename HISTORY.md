@@ -1,5 +1,10 @@
 # History
 
+## [1.0.1] - 2016-07-09
+### Fixed
+- Fixed "Cannot read property 'document' of undefined" error.
+- Fixed report link styles
+
 ## [1.0.0] - 2016-05-17
 ### Changed
 - HTML output for the report with navigation between files
@@ -26,7 +31,8 @@
 - Complexity analysis command.
 - Option to configure calculated metrics per function.
 
-[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.1...v1.0.0
 [1.0.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.0...v0.2.2
 [0.2.2]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.1...v0.2.2
 [0.2.1]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v0.2.0...v0.2.1
