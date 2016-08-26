@@ -11,7 +11,7 @@ Uses [ESComplex] to produce a complexity analysis report for a JavaScript projec
 
 ## Installation
 
-* Install Visual Studio Code 0.10 or later.
+* Install the latest Visual Studio Code.
 * In the command palette (`Ctrl-Shift-P` or `Cmd-Shift-P` or `F1`) select `Install Extension` and choose `JS Complexity Analysis Report`.
 
 
