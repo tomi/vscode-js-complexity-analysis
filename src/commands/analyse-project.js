@@ -13,12 +13,20 @@ const FileReport      = require("../report/file-report.js");
 const ProjectReport   = require("../report/project-report.js");
 
 function AnalyseProject(reportFactory, navigator) {
-    function findFiles(include, exclude) {
+    function findFiles(includePatterns, excludePatterns) {
         return vscode.workspace.findFiles("**/*.js", "**/node_modules/**")
             .then(files => {
-                return files.filter(file =>
-                    utils.none(exclude, pattern => minimatch(file.path, pattern)) &&
-                    utils.all(include, pattern => minimatch(file.path, pattern)));
+                const hasIncludePatterns = includePatterns.length > 0;
+                const hasExcludePatterns = excludePatterns.length > 0;
+
+                return files.filter(file => {
+                    const include = !hasIncludePatterns ||
+                        utils.any(includePatterns, pattern => minimatch(file.path, pattern));
+                    const exclude = hasExcludePatterns &&
+                        utils.any(excludePatterns, pattern => minimatch(file.path, pattern));
+
+                    return include && !exclude;
+                });
             });
     }
 

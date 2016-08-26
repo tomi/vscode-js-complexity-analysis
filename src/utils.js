@@ -1,11 +1,7 @@
 "use strict";
 
-function all(array, cb) {
-    return array.reduce((prevVal, currVal) => prevVal && cb(currVal), true);
-}
-
-function none(array, cb) {
-    return !all(array, cb);
+function any(array, cb) {
+    return array.reduce((prevVal, currVal) => prevVal || cb(currVal), false);
 }
 
 function sum(array) {
@@ -47,8 +43,7 @@ function round(num) {
 }
 
 module.exports = {
-    all,
-    none,
+    any,
     sum,
     average,
     max,
