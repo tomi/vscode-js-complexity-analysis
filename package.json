@@ -5,7 +5,7 @@
   "version": "1.0.3",
   "publisher": "TomiTurtiainen",
   "engines": {
-    "vscode": "^1.1.0"
+    "vscode": "^1.5.1"
   },
   "scripts": {
     "postinstall": "node ./node_modules/vscode/bin/install",
