@@ -2,7 +2,7 @@
   "name": "js-complexity-analysis",
   "displayName": "JS Complexity Analysis",
   "description": "Produce a complexity analysis report of your JS project",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "publisher": "TomiTurtiainen",
   "engines": {
     "vscode": "^1.5.1"
