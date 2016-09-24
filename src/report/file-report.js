@@ -41,7 +41,7 @@ const overviewMetrics = {
 };
 
 function backLink() {
-    return `${ link("/", "&#9664; back") }`;
+    return `${ link("", "&#9664; back") }`;
 }
 
 function buildFileSummary(htmlBuilder, analysis) {

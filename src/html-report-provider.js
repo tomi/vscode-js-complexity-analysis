@@ -20,12 +20,15 @@ function HtmlReportProvider(reportFactory, options) {
     }
 
     this.provideTextDocumentContent = function(uri) {
-        const path = uri.path;
+        // Remove leading slash unless it's alone
+        const path = uri.path.replace(/^\//, "") || "/";
 
         return getHtml(path);
     };
 
-    this.onDidChange = eventEmitter.event;
+    this.onDidChange = function() {
+        return eventEmitter.event;
+    };
 
     this.update = function(uri) {
         eventEmitter.fire(uri);
