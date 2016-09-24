@@ -44,7 +44,7 @@ function backLink() {
     return `${ link("", "&#9664; back") }`;
 }
 
-function buildFileSummary(htmlBuilder, analysis) {
+function buildFileSummary(htmlBuilder, analysis, includeBackLink) {
     const metrics = [
         { metric: overviewMetrics.maintainability, value: analysis.maintainability },
         { metric: overviewMetrics.loc,             value: analysis.sloc },
@@ -57,17 +57,20 @@ function buildFileSummary(htmlBuilder, analysis) {
         .appendBody(metricRow(metrics))
         .appendBody(header("Functions"))
         .appendBody(functionsTable(analysis))
-        .appendBody("<br><br>")
-        .appendBody(backLink());
+        .appendBody("<br><br>");
+
+    if (includeBackLink) {
+        htmlBuilder.appendBody(backLink());
+    }
 }
 
-function FileReport(analysis) {
+function FileReport(analysis, includeBackLink = true) {
     function toHtml() {
         const htmlBuilder = new HtmlBuilder();
 
         htmlBuilder.appendStyle(reportStyle);
 
-        buildFileSummary(htmlBuilder, analysis);
+        buildFileSummary(htmlBuilder, analysis, includeBackLink);
 
         return htmlBuilder.toHtml();
     }
