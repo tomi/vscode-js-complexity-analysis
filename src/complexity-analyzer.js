@@ -5,8 +5,16 @@ const walker    = require("escomplex-ast-moz");
 const escomplex = require("escomplex");
 const utils     = require("./utils");
 
+function parseJs(js) {
+    try {
+        return esprima.parse(js, { sourceType: "script", loc: true, jsx: true });
+    } catch (error) {
+        return esprima.parse(js, { sourceType: "module", loc: true, jsx: true });
+    }
+}
+
 function analyse(js) {
-    const ast = esprima.parse(js, { loc: true });
+    const ast = parseJs(js);
     const result = escomplex.analyse(ast, walker);
 
     return result;
