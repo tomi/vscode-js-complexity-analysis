@@ -14,10 +14,10 @@ function AnalyseFile(reportFactory, navigator) {
         const rawAnalysis = analyser.analyse(fileContents);
         const analysis = new FileAnalysis(filePath, rawAnalysis);
 
-        const report = new FileReport(analysis);
+        const report = new FileReport(analysis, false);
         reportFactory.addReport(filePath, report);
 
-        navigator.navigate(filePath);
+        navigator.navigate(`/${ filePath }`);
     }
 
     function runAnalysis(editor) {
