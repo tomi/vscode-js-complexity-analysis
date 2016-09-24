@@ -42,7 +42,7 @@ Produces a per function complexity analysis report of currently open file. Open 
 
 ## Change Log
 
-[View](https://github.com/tomi/vscode-js-complexity-analysis/blob/master/HISTORY.md)
+[View](https://github.com/tomi/vscode-js-complexity-analysis/blob/master/CHANGELOG.md)
 
 
 ## Bugs

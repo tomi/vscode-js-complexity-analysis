@@ -1,4 +1,4 @@
-# History
+# Changelog
 
 ## [1.0.4] - 2016-09-24
 ### Fixed
