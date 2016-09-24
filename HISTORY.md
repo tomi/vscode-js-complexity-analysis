@@ -1,5 +1,11 @@
 # History
 
+## [1.0.3] - 2016-09-24
+### Fixed
+- Fixed parsing of JSX syntax
+- Fixed parsing of ES6 modules
+- Fixed navigation between report pages
+
 ## [1.0.2] - 2016-08-26
 ### Fixed
 - Fixed handling of include and exclude settings
@@ -35,7 +41,8 @@
 - Complexity analysis command.
 - Option to configure calculated metrics per function.
 
-[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.3...HEAD
+[1.0.3]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.1...v1.0.0
 [1.0.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.0...v0.2.2
