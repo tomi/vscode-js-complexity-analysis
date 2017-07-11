@@ -1,6 +1,6 @@
 "use strict";
 
-const utils     = require("./utils");
+const _ = require("lodash");
 const escomplex = require("typhonjs-escomplex");
 
 function analyse(js) {
@@ -10,7 +10,7 @@ function analyse(js) {
 function process(analyses) {
     const summary = escomplex.processProject(analyses);
 
-    summary.totalLOC = utils.sum(summary.reports.map(report =>
+    summary.totalLOC = _.sum(summary.reports.map(report =>
         report.aggregate.sloc.logical));
 
     return summary;

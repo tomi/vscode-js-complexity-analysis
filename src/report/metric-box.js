@@ -1,7 +1,7 @@
 "use strict";
 
+const _ = require("lodash");
 const dot = require("dot");
-const utils = require("./../utils.js")
 const icons = require("./icons");
 
 const template = dot.template(`
@@ -56,7 +56,7 @@ function MetricBox(options) {
 
     return template({
         icon:  getIcon(metric, value),
-        value: utils.round(value),
+        value: _.round(value, 1),
         title: getTitle(metric)
     });
 }

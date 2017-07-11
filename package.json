@@ -68,7 +68,8 @@
   },
   "dependencies": {
     "dot": "1.1.2",
-    "typhonjs-escomplex":"0.0.12",
-    "minimatch": "3.0.4"
+    "es6-promisify": "5.0.0",
+    "lodash": "4.17.4",
+    "typhonjs-escomplex": "0.0.12"
   }
 }
