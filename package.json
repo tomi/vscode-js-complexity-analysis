@@ -47,14 +47,12 @@
     "theme": "light"
   },
   "devDependencies": {
-    "eslint": "^2.13.1",
-    "vscode": "0.11.18"
+    "eslint": "^4.2.0",
+    "vscode": "1.1.2"
   },
   "dependencies": {
-    "dot": "1.0.3",
-    "escomplex": "1.3.0",
-    "escomplex-ast-moz": "0.2.1",
-    "esprima": "3.0.0",
-    "minimatch": "3.0.3"
+    "dot": "1.1.2",
+    "typhonjs-escomplex":"0.0.12",
+    "minimatch": "3.0.4"
   }
 }
