@@ -1,9 +1,14 @@
 "use strict";
 
+const fsAsync = require("./utils/fs-async");
+const path = require("path");
 const vscode = require("vscode");
+const _ = require("lodash");
 const workspace = vscode.workspace;
 
 const CONFIG_BLOCK_NAME = "complexityAnalysis";
+
+const DEFAULT_INCLUDE = "**/*.js";
 
 const navigation = {
     scheme:    "jsComplexityAnalysis",
@@ -11,43 +16,65 @@ const navigation = {
 };
 
 /**
- * Returns configured exclude patterns
+ * Returns configured include and exclude patterns
  */
-function getExclude() {
-    const extensionConfig = workspace.getConfiguration(CONFIG_BLOCK_NAME);
-    const nativeConfig = workspace.getConfiguration("search").get("exclude");
-
-    let exclude = extensionConfig.get("exclude", nativeConfig) || {};
-
-    return objToArray(exclude);
-}
-
-/**
- * Returns configured include patterns
- */
-function getInclude() {
+function getIncludeExclude() {
     const extensionConfig = workspace.getConfiguration(CONFIG_BLOCK_NAME);
 
-    let include = extensionConfig.get("include", {});
-
-    return objToArray(include);
-}
-
-function objToArray(obj) {
-    let array = [];
-
-    for (let prop in obj) {
-        if (obj[prop]) {
-            array.push(prop);
-        }
+    const workspaceConfig = _getWorkspaceConfig(extensionConfig);
+    if (workspaceConfig) {
+        return Promise.resolve(workspaceConfig);
     }
 
-    return array;
+    return _getJsConfigConfig(workspace.rootPath)
+        .then(jsconfig => {
+            if (jsconfig) {
+                return jsconfig;
+            }
+
+            return {
+                include: [],
+                exclude: []
+            };
+        });
+}
+
+function _getWorkspaceConfig(extensionConfig) {
+    const hasConfig = extensionConfig.has("include") || extensionConfig.has("exclude");
+
+    if (!hasConfig) {
+        return null;
+    }
+
+    const include = extensionConfig.get("include");
+    const exclude = extensionConfig.get("exclude");
+
+    return {
+        include: _.isEmpty(include) ? [DEFAULT_INCLUDE] : include,
+        exclude
+    };
+}
+
+function _getJsConfigConfig(rootPath) {
+    const jsconfigFilename = path.join(rootPath, "jsconfig.json");
+
+    return fsAsync.readfile(jsconfigFilename, "utf8")
+        .then(fileContents => {
+            const jsconfig = JSON.parse(fileContents);
+            if (!jsconfig.include && !jsconfig.exclude) {
+                return null;
+            }
+
+            return {
+                include: jsconfig.include || DEFAULT_INCLUDE,
+                exclude: jsconfig.exclude || []
+            };
+        })
+        .catch(() => undefined);
 }
 
 module.exports = {
-    getInclude,
-    getExclude,
+    getIncludeExclude,
     options: {
         navigation
     }

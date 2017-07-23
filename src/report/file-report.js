@@ -5,6 +5,7 @@ const metricRow      = require("./metric-row");
 const reportStyle    = require("./report-style");
 const header         = require("./header");
 const functionsTable = require("./functions-table");
+const classesTable   = require("./classes-table");
 const link           = require("./link").localLink;
 
 const overviewMetrics = {
@@ -54,10 +55,20 @@ function buildFileSummary(htmlBuilder, analysis, includeBackLink) {
 
     htmlBuilder
         .appendBody(header("Summary"))
-        .appendBody(metricRow(metrics))
-        .appendBody(header("Functions"))
-        .appendBody(functionsTable(analysis))
-        .appendBody("<br><br>");
+        .appendBody(metricRow(metrics));
+
+    if (analysis.functions.length > 0) {
+        htmlBuilder
+            .appendBody(header("Functions"))
+            .appendBody(functionsTable(analysis.path, analysis.functions));
+    }
+
+    analysis.classes.forEach(classAnalysis => {
+        htmlBuilder
+            .appendBody(header(`class ${ classAnalysis.name }`))
+            .appendBody(functionsTable(analysis.path, classAnalysis.methods))
+            .appendBody("<br><br>");
+    })
 
     if (includeBackLink) {
         htmlBuilder.appendBody(backLink());

@@ -1,10 +1,10 @@
 "use strict";
 
-const utils = require("../utils");
+const _ = require("lodash");
 const icons = require("./icons.js");
 
 function formatMetric(value, warningThreshold, errorThreshold) {
-    const rounded = utils.round(value);
+    const rounded = _.round(value, 1);
 
     if (value > errorThreshold) {
         return rounded + " " + icons.error_small;

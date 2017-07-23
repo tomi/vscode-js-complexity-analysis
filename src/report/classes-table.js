@@ -24,22 +24,28 @@ function formatName(filePath, name, line) {
     return link(encodedName, filePath, line);
 }
 
-function FunctionsTable(filePath, functions) {
-    const rows = functions.map(f => [
-        formatName(filePath, f.name, f.line),
-        f.sloc,
-        f.params,
-        formatter.formatMetric(f.cyclomatic, 6, 10),
-        formatter.formatMetric(f.difficulty),
-        formatter.formatMetric(f.bugs)
-    ]);
+function ClassesTable(analysis) {
+    const filePath = analysis.path;
 
-    const functionsTable = new Table({
-        columns: columns,
-        rows: rows
+    const classes = analysis.classes.map(c => {
+        const rows = c.methods.map(f => [
+            formatName(filePath, f.name, f.line),
+            f.sloc,
+            f.params,
+            formatter.formatMetric(f.cyclomatic, 6, 10),
+            formatter.formatMetric(f.difficulty),
+            formatter.formatMetric(f.bugs)
+        ]);
+
+        const functionsTable = new Table({
+            columns: columns,
+            rows: rows
+        });
+
+        return c.name + "<br/><br/>" + functionsTable.toHtml();
     });
 
-    return functionsTable.toHtml();
+    return classes.join("<br/><br/>");
 }
 
-module.exports = FunctionsTable;
+module.exports = ClassesTable;
