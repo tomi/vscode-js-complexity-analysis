@@ -49,6 +49,14 @@ function _getWorkspaceConfig(extensionConfig) {
     const include = extensionConfig.get("include");
     const exclude = extensionConfig.get("exclude");
 
+    if (!Array.isArray(include)) {
+        throw new Error("complexityAnalysis.include needs to be an array")
+    }
+
+    if (!Array.isArray(exclude)) {
+        throw new Error("complexityAnalysis.exclude needs to be an array")
+    }
+
     return {
         include: _.isEmpty(include) ? [DEFAULT_INCLUDE] : include,
         exclude
