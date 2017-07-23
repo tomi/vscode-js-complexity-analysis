@@ -1,5 +1,15 @@
 # Changelog
 
+## [2.0.0] - 2017-07-23
+### Added
+- Analyse class methods
+### Changed
+- `jsconfig.json` is now used for includes and excludes if nothing else is configured
+- Configured include and exclude patterns need to be an array
+### Fixed
+- Full support for ES6 and newer JS features
+- Include and exclude patterns not working
+
 ## [1.0.4] - 2016-09-24
 ### Fixed
 - Fixed "invalid path" error on file complexity analysis command
@@ -45,7 +55,8 @@
 - Complexity analysis command
 - Option to configure calculated metrics per function
 
-[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.4...HEAD
+[Unreleased]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v2.0.0...HEAD
+[2.0.0]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.4...v2.0.0
 [1.0.4]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.3...v1.0.4
 [1.0.3]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.2...v1.0.3
 [1.0.2]: https://github.com/tomi/vscode-js-complexity-analysis/compare/v1.0.1...v1.0.2

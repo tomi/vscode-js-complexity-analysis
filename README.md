@@ -17,22 +17,24 @@ Uses [ESComplex] to produce a complexity analysis report for a JavaScript projec
 
 ## Usage
 
+This extenson uses [typhonjs-escomplex](https://github.com/typhonjs-node-escomplex/typhonjs-escomplex) to analyse source files. Currently it utilizes babylon w/ all plugins enabled to analyse source code, so it should support most JS syntax.
+
 ### Project analysis
 
 ![GIF](images/cmd.gif)
 
-Produces a per function complexity analysis report of all `.js` files in the project. `node_modules` folder is always ignored. Open command palette `F1` and search for `Project complexity analysis`.
+Produces a per function complexity analysis report of all `.js` files in the project. Open command palette `F1` and search for `Project complexity analysis`.
 
-By default project's `search.exclude` configuration is used for excluding files, but included files can be configured using include and exclude glob patterns. Select `Code` --> `Preferences` --> `User Settings` or `Workspace Settings`. For example:
+By default uses project's `jsconfig.json` configuration for including and excluding files, but files can also be configured using include and exclude glob patterns. Select `Code` --> `Preferences` --> `User Settings` or `Workspace Settings`. For example:
 
 ```javascript
-"complexityAnalysis.exclude": {
-    "**/bower_components/**": true
-},
+"complexityAnalysis.exclude": [
+    "**/bower_components/**"
+],
 
-"complexityAnalysis.include": {
-    "**/app/**": true
-}
+"complexityAnalysis.include": [
+    "**/app/**/*.js"
+]
 ```
 
 ### File analysis
@@ -54,9 +56,7 @@ Report them [here](https://github.com/tomi/vscode-js-complexity-analysis/issues)
 
 [MIT](https://github.com/tomi/vscode-js-complexity-analysis)
 
-[ESComplex]: https://github.com/jared-stilwell/escomplex
-[metrics]: https://github.com/jared-stilwell/escomplex#metrics
-
+[typhonjs-escomplex]: https://github.com/typhonjs-node-escomplex/typhonjs-escomplex
 
 ## Acknowledgements
 
