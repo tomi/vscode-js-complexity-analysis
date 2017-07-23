@@ -57,7 +57,7 @@
     "url": "https://github.com/tomi/vscode-js-complexity-analysis/issues"
   },
   "homepage": "https://github.com/tomi/vscode-js-complexity-analysis",
-  "icon": "images/logo.svg",
+  "icon": "images/logo.png",
   "galleryBanner": {
     "color": "#ffffff",
     "theme": "light"
