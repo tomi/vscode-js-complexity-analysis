@@ -1,8 +1,8 @@
 "use strict";
 
-const Table = require("./table");
-const formatter = require("./metric-formatter");
-const link  = require("./link").localLink;
+import Table from "./table";
+import { formatMetric } from "./metric-formatter";
+import { localLink as link } from "./link";
 
 const columns = [
     { title: "Name",               align: "left"  },
@@ -20,9 +20,9 @@ function FilesTable(analysis) {
     const rows = analysis.fileAnalyses.map(f => [
         formatFile(f.path),
         f.sloc,
-        formatter.formatMetric(f.cyclomatic.avg, 6, 10),
-        formatter.formatMetric(f.cyclomatic.max, 6, 10),
-        formatter.formatMetric(f.bugs)
+        formatMetric(f.cyclomatic.avg, 6, 10),
+        formatMetric(f.cyclomatic.max, 6, 10),
+        formatMetric(f.bugs)
     ]);
 
     const filesTable = new Table({
@@ -33,4 +33,4 @@ function FilesTable(analysis) {
     return filesTable.toHtml();
 }
 
-module.exports = FilesTable;
+export default FilesTable;

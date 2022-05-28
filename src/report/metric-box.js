@@ -1,10 +1,10 @@
 "use strict";
 
-const _ = require("lodash");
-const dot = require("dot");
-const icons = require("./icons");
+import { round } from "lodash";
+import { template as _template } from "dot";
+import { error, warning } from "./icons";
 
-const template = dot.template(`
+const template = _template(`
 <div class="metric">
     <div class="metric-icon">{{= it.icon }}</div>
     <div class="metric-value">{{= it.value }}</div>
@@ -32,9 +32,9 @@ function isInRange(range, value) {
 
 function getIcon(metric, value) {
     if (isInRange(metric.errorRange, value)) {
-        return icons.error;
+        return error;
     } else if (isInRange(metric.warningRange, value)) {
-        return icons.warning
+        return warning
     } else {
         return "";
     }
@@ -56,9 +56,9 @@ function MetricBox(options) {
 
     return template({
         icon:  getIcon(metric, value),
-        value: _.round(value, 1),
+        value: round(value, 1),
         title: getTitle(metric)
     });
 }
 
-module.exports = MetricBox;
+export default MetricBox;

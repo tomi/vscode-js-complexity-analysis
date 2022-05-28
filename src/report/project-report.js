@@ -1,10 +1,10 @@
 "use strict";
 
-const HtmlBuilder = require("./html-builder");
-const metricRow   = require("./metric-row");
-const reportStyle = require("./report-style");
-const header      = require("./header");
-const filesTable  = require("./files-table");
+import HtmlBuilder from "./html-builder";
+import metricRow from "./metric-row";
+import reportStyle from "./report-style";
+import header from "./header";
+import filesTable from "./files-table";
 
 const overviewMetrics = {
     maintainability:
@@ -60,4 +60,4 @@ function ProjectReport(analysis, errors) {
     this.toHtml = toHtml;
 }
 
-module.exports = ProjectReport;
+export default ProjectReport;

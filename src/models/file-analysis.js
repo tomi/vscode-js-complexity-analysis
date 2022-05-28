@@ -1,6 +1,6 @@
 "use strict";
 
-const _ = require("lodash");
+import { max as _max, flatMap } from "lodash";
 
 /**
  * Analysis data for single file
@@ -12,23 +12,23 @@ function FileAnalysis(path, analysis) {
 
     // Scale to between 0 and 100
     this.maintainability = Math.max(0, analysis.maintainability * 100 / 171);
-    this.sloc            = analysis.methodAggregate.sloc.logical;
+    this.sloc            = analysis.aggregate.sloc.logical;
 
-    const functionsMax = _.max(analysis.methods.map(m => m.cyclomatic)) || 0;
-    const classMethodsMax = _.max(
-        _.flatMap(analysis.classes.map(c => c.methods.map(m => m.cyclomatic)))
+    const functionsMax = _max(analysis.methods.map(m => m.cyclomatic)) || 0;
+    const classMethodsMax = _max(
+        flatMap(analysis.classes.map(c => c.methods.map(m => m.cyclomatic)))
     ) || 0;
     this.cyclomatic      = {
         avg: analysis.methodAverage.cyclomatic,
-        max: _.max([functionsMax, classMethodsMax])
+        max: _max([functionsMax, classMethodsMax])
     };
-    this.difficulty = analysis.methodAggregate.halstead.difficulty
-    this.bugs       = analysis.methodAggregate.halstead.bugs;
+    this.difficulty = analysis.aggregate.halstead.difficulty
+    this.bugs       = analysis.aggregate.halstead.bugs;
 
     this.functions = analysis.methods.map(f => ({
         name:       f.name,
         line:       f.lineStart,
-        params:     f.params,
+        params:     f.paramCount,
         sloc:       f.sloc.logical,
         cyclomatic: f.cyclomatic,
         difficulty: f.halstead.difficulty,
@@ -38,13 +38,13 @@ function FileAnalysis(path, analysis) {
     this.classes = analysis.classes.map(c => ({
         name:       c.name,
         line:       c.lineStart,
-        sloc:       c.methodAggregate.sloc.logical,
-        difficulty: c.methodAggregate.halstead.difficulty,
-        bugs:       c.methodAggregate.halstead.bugs,
+        sloc:       c.aggregate.sloc.logical,
+        difficulty: c.aggregate.halstead.difficulty,
+        bugs:       c.aggregate.halstead.bugs,
         methods:    c.methods.map(method => ({
             name:       method.name,
             line:       method.lineStart,
-            params:     method.params,
+            params:     method.paramCount,
             sloc:       method.sloc.logical,
             cyclomatic: method.cyclomatic,
             difficulty: method.halstead.difficulty,
@@ -55,4 +55,4 @@ function FileAnalysis(path, analysis) {
     Object.freeze(this);
 }
 
-module.exports = FileAnalysis;
+export default FileAnalysis;

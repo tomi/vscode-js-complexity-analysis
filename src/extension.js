@@ -1,6 +1,6 @@
 "use strict";
 
-const Controller = require("./controller");
+import Controller from "./controller";
 
 function activate(context) {
     const controller = new Controller(context);
@@ -9,4 +9,5 @@ function activate(context) {
     controller.activate();
 }
 
-exports.activate = activate;
+const _activate = activate;
+export { _activate as activate };

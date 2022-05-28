@@ -1,10 +1,10 @@
 "use strict";
 
-const config    = require("./../config.js").options.navigation;
-const workspace = require("vscode").workspace;
-const path      = require("path");
+import config  from "../config";
+import { workspace } from "vscode";
+import { join } from "path";
 
-const BASE_URL = `${ config.scheme }://${ config.authority }/`;
+const BASE_URL = `${ config.options.navigation.scheme }://${ config.options.navigation.authority }/`;
 
 function localLink(localUrl, name) {
     const url = BASE_URL + localUrl;
@@ -15,12 +15,12 @@ function localLink(localUrl, name) {
 
 function fileLineLink(name, file, line) {
     const rootPath = workspace.rootPath;
-    const href = `file://${ path.join(rootPath, file) }#L${ line }`;
+    const href = `file://${ join(rootPath, file) }#L${ line }`;
 
     return `<a href="${ href }">${ name }</a>`;
 }
 
-module.exports = {
+export default {
     localLink,
     fileLineLink
 };

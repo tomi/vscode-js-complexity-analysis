@@ -1,7 +1,7 @@
 "use strict";
 
-const config = require("../config");
-const vscode = require("vscode");
+import config from "../config";
+import { workspace } from "vscode";
 
 /**
  * Returns files in the workspace by taking include and
@@ -15,11 +15,11 @@ function getWorkspaceFiles() {
             const includePattern = _createGlob(include);
             const excludePattern = _createGlob(exclude);
 
-            return vscode.workspace.findFiles(includePattern, excludePattern);
+            return workspace.findFiles(includePattern, excludePattern);
         })
         .then(files => files.map(fileUri => ({
             fsPath: fileUri.fsPath,
-            relativePath: vscode.workspace.asRelativePath(fileUri)
+            relativePath: workspace.asRelativePath(fileUri)
         })));
 }
 
@@ -34,6 +34,6 @@ function _createGlob(patterns) {
   }
 };
 
-module.exports = {
+export default {
     getWorkspaceFiles
 }

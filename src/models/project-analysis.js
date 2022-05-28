@@ -48,4 +48,4 @@ function ProjectAnalysis() {
     }
 }
 
-module.exports = ProjectAnalysis;
+export default ProjectAnalysis;

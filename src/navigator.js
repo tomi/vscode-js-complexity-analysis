@@ -1,31 +1,42 @@
 "use strict";
 
-const vscode = require("vscode");
+import * as vscode from 'vscode';
+import { window, ViewColumn, Uri } from "vscode";
 
-function Navigator(options, reportProvider) {
+class Navigator {
+  constructor(options, reportProvider) {
     function getTargetColumn() {
-        const numOpenEditors = vscode.window.visibleTextEditors.length;
+      const numOpenEditors = window.visibleTextEditors.length;
 
-        switch (numOpenEditors) {
-            case 0:  return vscode.ViewColumn.One;
-            case 1:  return vscode.ViewColumn.Two;
-            case 2:  return vscode.ViewColumn.Three;
-            case 3:  return vscode.ViewColumn.Three;
-            default: return vscode.ViewColumn.One;
-        }
+      switch (numOpenEditors) {
+        case 0:
+          return ViewColumn.One;
+        case 1:
+          return ViewColumn.Two;
+        case 2:
+          return ViewColumn.Three;
+        case 3:
+          return ViewColumn.Three;
+        default:
+          return ViewColumn.One;
+      }
     }
 
     function navigate(path) {
-        const uri = vscode.Uri.parse(`${ options.scheme }://${ options.authority }${ path }`);
+      const panel = vscode.window.createWebviewPanel(
+        "complexity-analysis", // Identifies the type of the webview. Used internally
+        "Complexity Analysis Coding", // Title of the panel displayed to the user
+        getTargetColumn(), // Editor column to show the new webview panel in.
+        {} // Webview options. More on these later.
+      );
 
-        const viewColumn = getTargetColumn();
-
-        vscode.commands.executeCommand("vscode.previewHtml", uri, viewColumn)
-            .then(() => {}, e => vscode.window.showErrorMessage(e));
+      const uri = Uri.parse(`${options.scheme}://${options.authority}${path}`);
         reportProvider.update(uri);
+        panel.webview.html = reportProvider.provideTextDocumentContent(uri);
     }
 
     this.navigate = navigate;
+  }
 }
 
-module.exports = Navigator;
+export default Navigator;

@@ -1,10 +1,10 @@
 "use strict";
 
-const fsAsync = require("./utils/fs-async");
-const path = require("path");
-const vscode = require("vscode");
-const _ = require("lodash");
-const workspace = vscode.workspace;
+import { readFileAsync } from "fs";
+import { join } from "path";
+import { workspace as _workspace } from "vscode";
+import { isEmpty } from "lodash";
+const workspace = _workspace;
 
 const CONFIG_BLOCK_NAME = "complexityAnalysis";
 
@@ -58,15 +58,15 @@ function _getWorkspaceConfig(extensionConfig) {
     }
 
     return {
-        include: _.isEmpty(include) ? [DEFAULT_INCLUDE] : include,
+        include: isEmpty(include) ? [DEFAULT_INCLUDE] : include,
         exclude
     };
 }
 
 function _getJsConfigConfig(rootPath) {
-    const jsconfigFilename = path.join(rootPath, "jsconfig.json");
+    const jsconfigFilename = join(rootPath, "jsconfig.json");
 
-    return fsAsync.readfile(jsconfigFilename, "utf8")
+    return readFileAsync(jsconfigFilename, "utf8")
         .then(fileContents => {
             const jsconfig = JSON.parse(fileContents);
             if (!jsconfig.include && !jsconfig.exclude) {
@@ -81,7 +81,7 @@ function _getJsConfigConfig(rootPath) {
         .catch(() => undefined);
 }
 
-module.exports = {
+export default {
     getIncludeExclude,
     options: {
         navigation

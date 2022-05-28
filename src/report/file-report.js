@@ -1,12 +1,11 @@
 "use strict";
 
-const HtmlBuilder    = require("./html-builder");
-const metricRow      = require("./metric-row");
-const reportStyle    = require("./report-style");
-const header         = require("./header");
-const functionsTable = require("./functions-table");
-const classesTable   = require("./classes-table");
-const link           = require("./link").localLink;
+import HtmlBuilder from "./html-builder";
+import metricRow from "./metric-row";
+import reportStyle from "./report-style";
+import header from "./header";
+import functionsTable from "./functions-table";
+import { localLink as link } from "./link";
 
 const overviewMetrics = {
     maintainability:
@@ -89,4 +88,4 @@ function FileReport(analysis, includeBackLink = true) {
     this.toHtml = toHtml;
 }
 
-module.exports = FileReport;
+export default FileReport;

@@ -1,17 +1,17 @@
 "use strict";
 
-const dot = require("dot");
+import { template } from "dot";
 
-const tableTemplate = dot.template(`
+const tableTemplate = template(`
 <table>
     <thead>{{= it.header }}</thead>
     <tbody>{{= it.body }}</tbody>
 </table>
 `);
 
-const rowTemplate = dot.template(`<tr>{{= it.cells }}</tr>`);
+const rowTemplate = template(`<tr>{{= it.cells }}</tr>`);
 
-const cellTemplate = dot.template(`<td align="{{= it.align }}">{{= it.value }}</td>`);
+const cellTemplate = template(`<td align="{{= it.align }}">{{= it.value }}</td>`);
 
 function getAlign(column) {
     return column.align || "left";
@@ -50,4 +50,4 @@ class HtmlTable {
     }
 }
 
-module.exports = HtmlTable;
+export default HtmlTable;
