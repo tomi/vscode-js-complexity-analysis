@@ -1,20 +1,20 @@
 "use strict";
 
-const _ = require("lodash");
-const icons = require("./icons.js");
+import { round } from "lodash";
+import { error_small, warning_small } from "./icons.js";
 
 function formatMetric(value, warningThreshold, errorThreshold) {
-    const rounded = _.round(value, 1);
+    const rounded = round(value, 1);
 
     if (value > errorThreshold) {
-        return rounded + " " + icons.error_small;
+        return rounded + " " + error_small;
     } else if (value > warningThreshold) {
-        return rounded + " " + icons.warning_small;
+        return rounded + " " + warning_small;
     } else {
         return rounded;
     }
 }
 
-module.exports = {
+export default {
     formatMetric
 };

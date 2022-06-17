@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "module": "commonjs",
+    "target": "esnext",
+    "lib": ["esnext"],
+    "strict": true,
+    "skipLibCheck": true,
+    "sourceMap": true,
+    "allowJs": true,
+    "outDir": "out"
+  },
+  "exclude": [
+    "node_modules",
+    ".vscode-test"
+  ],
+  "include": ["src/**/*.ts", "src/**/*.js"],
+}

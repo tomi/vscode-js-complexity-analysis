@@ -65,4 +65,4 @@ a:hover {
 }
 `;
 
-module.exports = STYLE;
+export default STYLE;

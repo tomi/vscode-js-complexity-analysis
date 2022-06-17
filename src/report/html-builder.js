@@ -4,36 +4,38 @@ function getStyleDefinition(css) {
     return css ? `<style>${ css }</style>` : "";
 }
 
-function HtmlBuilder() {
-    let styles = "";
-    let body = "";
+class HtmlBuilder {
+    constructor() {
+        let styles = "";
+        let body = "";
 
-    function appendStyle(css) {
-        styles += css;
+        function appendStyle(css) {
+            styles += css;
 
-        return this;
-    }
+            return this;
+        }
 
-    function appendBody(html) {
-        body += html;
+        function appendBody(html) {
+            body += html;
 
-        return this;
-    }
+            return this;
+        }
 
-    function toHtml() {
-        return `<html>
+        function toHtml() {
+            return `<html>
     <head>
-        ${ getStyleDefinition(styles) }
+        ${getStyleDefinition(styles)}
     </head>
     <body>
-        ${ body }
+        ${body}
     </body>
 </html>`;
-    }
+        }
 
-    this.appendStyle = appendStyle;
-    this.appendBody = appendBody;
-    this.toHtml = toHtml;
+        this.appendStyle = appendStyle;
+        this.appendBody = appendBody;
+        this.toHtml = toHtml;
+    }
 }
 
-module.exports = HtmlBuilder;
+export default HtmlBuilder;

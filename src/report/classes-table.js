@@ -1,8 +1,8 @@
 "use strict";
 
-const Table = require("./table");
-const formatter = require("./metric-formatter.js");
-const link  = require("./link.js").fileLineLink;
+import Table from "./table";
+import { formatMetric } from "./metric-formatter.js";
+import { fileLineLink as link } from "./link.js";
 
 const columns = [
     { title: "Function",   align: "left"  },
@@ -32,9 +32,9 @@ function ClassesTable(analysis) {
             formatName(filePath, f.name, f.line),
             f.sloc,
             f.params,
-            formatter.formatMetric(f.cyclomatic, 6, 10),
-            formatter.formatMetric(f.difficulty),
-            formatter.formatMetric(f.bugs)
+            formatMetric(f.cyclomatic, 6, 10),
+            formatMetric(f.difficulty),
+            formatMetric(f.bugs)
         ]);
 
         const functionsTable = new Table({
@@ -48,4 +48,4 @@ function ClassesTable(analysis) {
     return classes.join("<br/><br/>");
 }
 
-module.exports = ClassesTable;
+export default ClassesTable;

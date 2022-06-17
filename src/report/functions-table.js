@@ -1,8 +1,8 @@
 "use strict";
 
-const Table = require("./table");
-const formatter = require("./metric-formatter.js");
-const link  = require("./link.js").fileLineLink;
+import Table from "./table";
+import metricFormatter from "./metric-formatter";
+import link from "./link.js";
 
 const columns = [
     { title: "Function",   align: "left"  },
@@ -21,7 +21,7 @@ function formatName(filePath, name, line) {
         .replace(/"/g, "&quot;")
         .replace(/'/g, "&#039;");
 
-    return link(encodedName, filePath, line);
+    return link.fileLineLink(encodedName, filePath, line);
 }
 
 function FunctionsTable(filePath, functions) {
@@ -29,9 +29,9 @@ function FunctionsTable(filePath, functions) {
         formatName(filePath, f.name, f.line),
         f.sloc,
         f.params,
-        formatter.formatMetric(f.cyclomatic, 6, 10),
-        formatter.formatMetric(f.difficulty),
-        formatter.formatMetric(f.bugs)
+        metricFormatter.formatMetric(f.cyclomatic, 6, 10),
+        metricFormatter.formatMetric(f.difficulty),
+        metricFormatter.formatMetric(f.bugs)
     ]);
 
     const functionsTable = new Table({
@@ -42,4 +42,4 @@ function FunctionsTable(filePath, functions) {
     return functionsTable.toHtml();
 }
 
-module.exports = FunctionsTable;
+export default FunctionsTable;

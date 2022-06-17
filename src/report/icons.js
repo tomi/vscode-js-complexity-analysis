@@ -34,10 +34,8 @@ const ICON_ERROR_SMALL =
 //     <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
 // </svg>`;
 
-module.exports = {
-    ok:            ICON_OK,
-    warning:       ICON_WARNING,
-    warning_small: ICON_WARNING_SMALL,
-    error:         ICON_ERROR,
-    error_small:   ICON_ERROR_SMALL
-};
+export const ok = ICON_OK;
+export const warning = ICON_WARNING;
+export const warning_small = ICON_WARNING_SMALL;
+export const error = ICON_ERROR;
+export const error_small = ICON_ERROR_SMALL;

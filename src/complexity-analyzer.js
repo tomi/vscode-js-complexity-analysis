@@ -1,22 +1,22 @@
 "use strict";
 
-const _ = require("lodash");
-const escomplex = require("typhonjs-escomplex");
+import { sum } from "lodash";
+import { analyzeModule, processProject } from "typhonjs-escomplex";
 
 function analyse(js) {
-    return escomplex.analyzeModule(js);
+    return analyzeModule(js);
 }
 
 function process(analyses) {
-    const summary = escomplex.processProject(analyses);
+    const summary = processProject(analyses);
 
-    summary.totalLOC = _.sum(summary.reports.map(report =>
+    summary.totalLOC = sum(summary.reports.map(report =>
         report.aggregate.sloc.logical));
 
     return summary;
 }
 
-module.exports = {
+export default {
     analyse,
     process
 };

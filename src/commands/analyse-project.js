@@ -1,14 +1,14 @@
 "use strict";
 
-const fsAsync   = require("../utils/fs-async");
-const vscode    = require("vscode");
-const analyser  = require("../complexity-analyzer");
-const workspace = require("../utils/workspace");
+import { readFileAsync } from "fs";
+import { window } from "vscode";
+import { analyse } from "../complexity-analyzer";
+import { getWorkspaceFiles } from "../utils/workspace";
 
-const FileAnalysis    = require("../models/file-analysis.js");
-const ProjectAnalysis = require("../models/project-analysis.js");
-const FileReport      = require("../report/file-report.js");
-const ProjectReport   = require("../report/project-report.js");
+import FileAnalysis from "../models/file-analysis.js";
+import ProjectAnalysis from "../models/project-analysis.js";
+import FileReport from "../report/file-report.js";
+import ProjectReport from "../report/project-report.js";
 
 function AnalyseProject(reportFactory, navigator) {
     function runAnalysis() {
@@ -21,7 +21,7 @@ function AnalyseProject(reportFactory, navigator) {
     }
 
     function buildReport() {
-        return workspace.getWorkspaceFiles()
+        return getWorkspaceFiles()
             .then(files => {
                 const analysePromises = files.map(analyseSingleFile);
 
@@ -31,10 +31,10 @@ function AnalyseProject(reportFactory, navigator) {
     }
 
     function analyseSingleFile({ fsPath, relativePath }) {
-        return fsAsync.readfile(fsPath, "utf8")
+        return readFileAsync(fsPath, "utf8")
             .then(fileContents => {
                 try {
-                    const rawAnalysis = analyser.analyse(fileContents);
+                    const rawAnalysis = analyse(fileContents);
                     const analysis = new FileAnalysis(relativePath, rawAnalysis);
 
                     const report = new FileReport(analysis);
@@ -70,11 +70,11 @@ function AnalyseProject(reportFactory, navigator) {
     }
 
     function handleError(error) {
-        vscode.window.showErrorMessage("Failed to analyse file. " + error);
+        window.showErrorMessage("Failed to analyse file. " + error);
         console.log(error);
     }
 
     this.execute = runAnalysis;
 }
 
-module.exports = AnalyseProject;
+export default AnalyseProject;

@@ -1,9 +1,9 @@
 "use strict";
 
-const dot = require("dot");
-const metricBox = require("./metric-box")
+import { template as _template } from "dot";
+import metricBox from "./metric-box";
 
-const template = dot.template(`
+const template = _template(`
 <div class="metric-row">{{= it.metrics }}</div>
 `);
 
@@ -15,4 +15,4 @@ function MetricRow(metrics) {
     });
 }
 
-module.exports = MetricRow;
+export default MetricRow;

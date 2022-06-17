@@ -1,12 +1,12 @@
 "use strict";
 
-const vscode = require("vscode");
+import { EventEmitter } from "vscode";
 
 /**
  *
  */
 function HtmlReportProvider(reportFactory, options) {
-    const eventEmitter = new vscode.EventEmitter();
+    const eventEmitter = new EventEmitter();
     this.scheme = options.scheme;
 
     function getHtml(path) {
@@ -35,4 +35,4 @@ function HtmlReportProvider(reportFactory, options) {
     };
 }
 
-module.exports = HtmlReportProvider;
+export default HtmlReportProvider;

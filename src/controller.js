@@ -1,36 +1,36 @@
 "use strict";
 
-const vscode = require("vscode");
+import { commands, workspace } from "vscode";
 
-const config = require("./config").options;
-const Navigator = require("./navigator");
-const ReportFactory = require("./report-factory");
-const HtmlReportProvider = require("./html-report-provider");
-const AnalyseFileCommand = require("./commands/analyse-file");
-const AnalyseProjectCommand = require("./commands/analyse-project");
+import config from "./config";
+import Navigator from "./navigator";
+import ReportFactory from "./report-factory";
+import HtmlReportProvider from "./html-report-provider";
+import AnalyseFileCommand from "./commands/analyse-file";
+import AnalyseProjectCommand from "./commands/analyse-project";
 
 const AnalyseFileCmdName    = "complexityAnalysis.analyseFile";
 const AnalyseProjectCmdName = "complexityAnalysis.analyseProject";
 
 function Controller(context) {
     const reportFactory     = new ReportFactory();
-    const reportProvider    = new HtmlReportProvider(reportFactory, config.navigation);
-    const navigator         = new Navigator(config.navigation, reportProvider);
+    const reportProvider    = new HtmlReportProvider(reportFactory, config.options.navigation);
+    const navigator         = new Navigator(config.options.navigation, reportProvider);
     const cmdAnalyseFile    = new AnalyseFileCommand(reportFactory, navigator);
     const cmdAnalyseProject = new AnalyseProjectCommand(reportFactory, navigator);
 
     function activate() {
         context.subscriptions.push(
-            vscode.commands.registerTextEditorCommand(
+            commands.registerTextEditorCommand(
                 AnalyseFileCmdName, cmdAnalyseFile.execute));
 
         context.subscriptions.push(
-            vscode.commands.registerCommand(
+            commands.registerCommand(
                 AnalyseProjectCmdName, cmdAnalyseProject.execute));
 
         context.subscriptions.push(
-            vscode.workspace.registerTextDocumentContentProvider(
-                config.navigation.scheme, reportProvider));
+            workspace.registerTextDocumentContentProvider(
+                config.options.navigation.scheme, reportProvider));
     }
 
     function dispose() {
@@ -40,4 +40,4 @@ function Controller(context) {
     this.dispose = dispose;
 }
 
-module.exports = Controller;
+export default Controller;

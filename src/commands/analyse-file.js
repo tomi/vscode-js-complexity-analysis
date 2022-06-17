@@ -1,17 +1,17 @@
 "use strict";
 
-const vscode   = require("vscode");
-const analyser = require("../complexity-analyzer");
-const FileAnalysis = require("../models/file-analysis.js");
-const FileReport = require("../report/file-report.js");
+import { workspace, window } from "vscode";
+import Analyzer from "../complexity-analyzer";
+import FileAnalysis from "../models/file-analysis.js";
+import FileReport from "../report/file-report.js";
 
 function AnalyseFile(reportFactory, navigator) {
 
     function buildReport(document) {
-        const filePath = vscode.workspace.asRelativePath(document.fileName);
+        const filePath = workspace.asRelativePath(document.fileName);
 
         const fileContents = document.getText();
-        const rawAnalysis = analyser.analyse(fileContents);
+        const rawAnalysis = Analyzer.analyse(fileContents);
         const analysis = new FileAnalysis(filePath, rawAnalysis);
 
         const report = new FileReport(analysis, false);
@@ -25,11 +25,11 @@ function AnalyseFile(reportFactory, navigator) {
             buildReport(editor.document);
         } catch (e) {
             console.log(e);
-            vscode.window.showErrorMessage("Failed to analyse file. " + e);
+            window.showErrorMessage("Failed to analyse file. " + e);
         }
     }
 
     this.execute = runAnalysis;
 }
 
-module.exports = AnalyseFile;
+export default AnalyseFile;
